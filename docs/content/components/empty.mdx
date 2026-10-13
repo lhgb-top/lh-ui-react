@@ -1,0 +1,48 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import EmptyBasic from '@site/demos/empty/basic'
+
+# Empty 空状态
+
+空状态时的占位提示。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <EmptyBasic />
+</DemoBlock>
+
+```tsx
+import { LhEmpty, LhButton } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhEmpty
+      description="自定义描述文案"
+      actions={<LhButton type="primary">重新加载</LhButton>}
+    />
+  )
+}
+```
+
+## Empty Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| description | 描述文案（未传取语言包 `empty.description`） | `ReactNode` | — | `'暂无数据'` |
+| image | 自定义图片 URL | `string` | — | — |
+| actions | 动作区 | `ReactNode` | — | — |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+:::tip[自定义图片]
+传 `image` prop 或 `children` 节点都会走自定义图容器（`--custom` 修饰符约束 `max-width: 160px / max-height: 120px`）；都不传时渲染内置水墨内联插画（主题变量着色，明暗模式自适配）。
+:::
+
+:::tip[无障碍]
+根元素为 `role="status"`（温和播报）；默认插画 `aria-hidden`，不干扰读屏。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/empty'
+```

@@ -1,0 +1,75 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import TooltipBasic from '@site/demos/tooltip/basic'
+
+# Tooltip
+
+Commonly used to show hint information on hover.
+
+## Basic usage
+
+<DemoBlock title="Placements and triggers">
+  <TooltipBasic />
+</DemoBlock>
+
+```tsx
+import { LhButton, LhTooltip } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <>
+      <LhTooltip content="Top tip" placement="top">
+        <LhButton>Top</LhButton>
+      </LhTooltip>
+      <LhTooltip content="Click trigger" trigger="click">
+        <LhButton>Click</LhButton>
+      </LhTooltip>
+      <LhTooltip content="Semantic color tip" type="success">
+        <LhButton>Semantic</LhButton>
+      </LhTooltip>
+    </>
+  )
+}
+```
+
+## Tooltip Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| content | Tooltip content | `string` | — | — |
+| placement | Placement | `LhTooltipPlacement` | `top` / `bottom` / `left` / `right` (with `-start` / `-end`) | `'top'` |
+| trigger | Trigger method | `'hover' \| 'click' \| 'focus'` | — | `'hover'` |
+| disabled | Disable the tooltip | `boolean` | — | `false` |
+| visible | Controlled visibility | `boolean` | — | — |
+| defaultVisible | Uncontrolled default visibility | `boolean` | — | `false` |
+| showAfter / openDelay | Show delay (ms; aliases of each other) | `number` | — | `0` |
+| hideAfter / closeDelay | Hide delay (ms; aliases of each other) | `number` | — | `0` |
+| effect | Theme | `'dark' \| 'light'` | — | `'dark'` |
+| type | Semantic color type (overrides the effect background color) | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | — | — |
+| bgColor | Custom background color (overrides effect and type) | `string` | — | — |
+| maxWidth | Maximum width | `string \| number` | — | `'200px'` |
+| themeVars | Component-level theme variables | `Record<string, string>` | — | — |
+| sx | Shorthand layout props (applied to the trigger) | `SxProps` | — | — |
+
+## Tooltip events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onVisibleChange | Visibility change (fires in both controlled and uncontrolled modes) | `(visible: boolean) => void` | `update:visible` |
+
+## ref
+
+`forwardRef<HTMLDivElement>` — the trigger root element. `LhTooltipInstance` exposes `show()` / `hide()` / `toggle()`.
+
+:::tip[Simplified controlled mode]
+Unlike plus, this library **has no `manual` switch**: passing `visible` makes it controlled, and `onVisibleChange` notifies the outside. See the [migration guide](../guide/migration.md#11-tooltip-受控简化).
+:::
+
+:::tip[Collapse on scroll]
+The tooltip collapses automatically when its trigger scrolls out of the viewport (`onScrollOut`), preventing a fixed overlay from floating over page content.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/tooltip'
+```

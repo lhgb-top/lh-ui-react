@@ -1,0 +1,79 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import ConfigProviderBasic from '@site/demos/config-provider/basic'
+
+# ConfigProvider 全局配置
+
+为组件提供统一的全局配置（尺寸、语言、主题变量、背景花纹白名单）。
+
+## 基础用法
+
+<DemoBlock title="全局尺寸与主题变量">
+  <ConfigProviderBasic />
+</DemoBlock>
+
+```tsx
+import { LhConfigProvider, LhButton } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <>
+      <LhConfigProvider size="large" themeVars={{ 'primary-color': '#722ed1' }}>
+        <LhButton type="primary">全局 large + 自定义主色</LhButton>
+      </LhConfigProvider>
+
+      <LhConfigProvider size="small">
+        <LhButton type="primary">全局 small</LhButton>
+      </LhConfigProvider>
+    </>
+  )
+}
+```
+
+## Props
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| size | 全局尺寸 | `'large' \| 'middle' \| 'small'` | — |
+| locale | 全局语言 | `LhComponentLanguage` | `'zh-CN'` |
+| themeVars | 全局主题变量（键不带 `--lh-` 前缀） | `Record<string, string>` | — |
+| patternComponents | 启用背景花纹的组件白名单 | `LhThemeableComponent[]` | — |
+| componentTheme | 按组件名单独配置主题变量 | `Partial<Record<LhThemeableComponent, Record<string, string>>>` | — |
+
+## 主题变量优先级
+
+**组件自身 props > `componentTheme[组件名]` > 全局 `themeVars`**
+
+## themeVars 可用键
+
+| 键 | 说明 |
+| --- | --- |
+| `primary-color` | 主色 |
+| `success-color` / `warning-color` / `danger-color` / `info-color` | 语义色 |
+| `gold-color` / `vermilion-color` / `jade-color` | 国风专属色 |
+| `bg-color` / `text-color` / `border-color` | 中性色 |
+| `bg-pattern` | 花纹背景 URL（如 `var(--lh-pattern-willow)`） |
+| `bg-pattern-opacity` / `bg-pattern-color` | 花纹透明度与颜色 |
+| `decoration-color` | 装饰色 |
+
+完整主题定制见 [主题定制](../guide/theme-customization.md)。
+
+## 在组件内读取
+
+```tsx
+import { useLhConfigContext } from '@lh-ui/react'
+
+function Probe() {
+  const { size, locale } = useLhConfigContext()
+  return <span>{size} / {locale}</span>
+}
+```
+
+:::tip[消费侧兜底]
+未包裹 `LhConfigProvider` 时，`useLhConfigContext()` 返回全字段 `undefined` 的兜底对象（而非 `null`），组件内不需要判空。这是与 plus 的一个有意差异。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/config-provider'
+```

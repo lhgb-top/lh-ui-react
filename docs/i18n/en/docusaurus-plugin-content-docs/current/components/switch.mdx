@@ -1,0 +1,65 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import SwitchBasic from '@site/demos/switch/basic'
+
+# Switch
+
+Toggles between two mutually exclusive states, rendering a custom `role="switch"` control.
+
+## Basic usage
+
+<DemoBlock title="Controlled switch">
+  <SwitchBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhSwitch } from '@lh-ui/react'
+
+export default function Demo() {
+  const [active, setActive] = useState(false)
+
+  return (
+    <>
+      <LhSwitch checked={active} onChange={(val) => setActive(val)} />
+      <LhSwitch
+        checked={active}
+        activeText="On"
+        inactiveText="Off"
+        onChange={(val) => setActive(val)}
+      />
+      <LhSwitch disabled />
+      <LhSwitch loading />
+    </>
+  )
+}
+```
+
+## Switch Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| checked | Controlled switch state | `boolean` | — | — |
+| defaultChecked | Uncontrolled default state | `boolean` | — | `false` |
+| disabled | Whether to disable | `boolean` | — | `false` |
+| loading | Loading state | `boolean` | — | `false` |
+| activeText | Text shown when on | `string` | — | Locale pack `switch.on` |
+| inactiveText | Text shown when off | `string` | — | Locale pack `switch.off` |
+| size | Size | `'large' \| 'middle' \| 'small'` | — | Follows ConfigProvider |
+| themeVars | Component-level theme variables | `Record<string, string>` | — | — |
+| sx | Shorthand layout props | `SxProps` | — | — |
+
+## Switch events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onChange | State change (two arguments) | `(checked: boolean, event: MouseEvent \| KeyboardEvent) => void` | `@change` |
+
+:::tip[Keyboard interaction]
+The switch responds to Enter / Space to toggle, consistent with a native checkbox; `aria-checked` tracks the current state.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/switch'
+```

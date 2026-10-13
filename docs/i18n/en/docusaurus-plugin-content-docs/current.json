@@ -1,0 +1,26 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.guide.category.指南": {
+    "message": "Guide",
+    "description": "The label for category '指南' in sidebar 'guide'"
+  },
+  "sidebar.components.category.基础组件": {
+    "message": "Basic",
+    "description": "The label for category '基础组件' in sidebar 'components'"
+  },
+  "sidebar.components.category.导航组件": {
+    "message": "Navigation",
+    "description": "The label for category '导航组件' in sidebar 'components'"
+  },
+  "sidebar.components.category.表单组件": {
+    "message": "Form",
+    "description": "The label for category '表单组件' in sidebar 'components'"
+  },
+  "sidebar.components.category.反馈组件": {
+    "message": "Feedback",
+    "description": "The label for category '反馈组件' in sidebar 'components'"
+  }
+}

@@ -1,0 +1,66 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import PopconfirmBasic from '@site/demos/popconfirm/basic'
+
+# Popconfirm
+
+Pops a confirmation bubble when an element is clicked, used for a second confirmation before dangerous or important operations. It has `role="alertdialog"` semantics: it traps focus on open and closes after confirm / cancel or Esc.
+
+## Basic usage
+
+<DemoBlock title="Confirm / cancel / tone types">
+  <PopconfirmBasic />
+</DemoBlock>
+
+```tsx
+import { LhButton, LhPopconfirm } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhPopconfirm title="Are you sure to perform this action?" onConfirm={() => console.log('confirmed')}>
+      <LhButton>Confirm</LhButton>
+    </LhPopconfirm>
+  )
+}
+```
+
+## Popconfirm Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| children | Trigger node | `ReactNode` | — | — |
+| title | Confirmation title / question | `ReactNode` | — | — |
+| confirmText | Confirm button text | `string` | — | Locale pack `popconfirm.confirm` |
+| cancelText | Cancel button text | `string` | — | Locale pack `popconfirm.cancel` |
+| type | Tone type | `'info' \| 'warning' \| 'danger'` | — | `'warning'` |
+| placement | Placement | `LhPopconfirmPlacement` | `top` / `bottom` / `left` / `right` (with `-start` / `-end`) | `'top'` |
+| trigger | Trigger method | `LhPopconfirmTrigger` | `'hover' \| 'click' \| 'focus' \| 'manual'` | `'click'` |
+| disabled | Whether to disable | `boolean` | — | `false` |
+| showIcon | Whether to show the icon | `boolean` | — | `true` |
+| hideCancel | Whether to hide the cancel button | `boolean` | — | `false` |
+| visible | Controlled visibility | `boolean` | — | — |
+| defaultVisible | Uncontrolled default visibility | `boolean` | — | `false` |
+| popperClass | Custom overlay class name | `string` | — | — |
+| themeVars | Component-level theme variables | `Record<string, string>` | — | — |
+| sx | Shorthand layout props (applied to the trigger) | `SxProps` | — | — |
+
+## Popconfirm events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onConfirm | Clicking the confirm button | `() => void` | `confirm` |
+| onCancel | Clicking the cancel button or pressing Esc | `() => void` | `cancel` |
+| onVisibleChange | Visibility change | `(visible: boolean) => void` | `update:visible` |
+
+:::tip[Focus trap and Esc]
+The overlay always traps focus as an `alertdialog`; pressing Esc is equivalent to clicking cancel (fires `onCancel` and closes).
+:::
+
+:::tip[Auto-close after confirmation]
+Consistent with plus: clicking confirm or cancel fires the callback first and then closes; no manual external collapse is needed.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/popconfirm'
+```

@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["esnext", "dom", "dom.iterable"],
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["vite/client", "node", "@testing-library/jest-dom"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@lh-ui/react": ["./src/index.ts"]
+    },
+    "outDir": "dist/types"
+  },
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "tests/**/*",
+    "dev/**/*",
+    "docs/demos/**/*",
+    "docs/src/**/*",
+    "docs/docusaurus.config.ts",
+    "docs/sidebars.ts"
+  ],
+  "exclude": ["node_modules", "dist", "es", "lib", "coverage"]
+}

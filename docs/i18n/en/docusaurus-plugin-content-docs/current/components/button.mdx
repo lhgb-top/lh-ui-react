@@ -1,0 +1,88 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import ButtonBasic from '@site/demos/button/basic'
+import ButtonSize from '@site/demos/button/size'
+
+# Button
+
+A common action button, supporting multiple types, sizes, states, and Chinese-style theme colors.
+
+## Basic usage
+
+<DemoBlock title="Basic usage">
+  <ButtonBasic />
+</DemoBlock>
+
+```tsx
+import { LhButton } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <>
+      <LhButton>Default</LhButton>
+      <LhButton type="primary">Primary</LhButton>
+      <LhButton type="success">Success</LhButton>
+      <LhButton type="warning">Warning</LhButton>
+      <LhButton type="danger">Danger</LhButton>
+      <LhButton type="info">Info</LhButton>
+    </>
+  )
+}
+```
+
+## Sizes and states
+
+<DemoBlock title="Sizes and states">
+  <ButtonSize />
+</DemoBlock>
+
+```tsx
+import { LhButton } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <>
+      <LhButton size="large">Large</LhButton>
+      <LhButton>Default</LhButton>
+      <LhButton size="small">Small</LhButton>
+
+      <LhButton type="primary" loading>Loading</LhButton>
+      <LhButton type="primary" disabled>Disabled</LhButton>
+      <LhButton type="primary" icon="search">Icon</LhButton>
+      <LhButton type="primary" round>Rounded</LhButton>
+      <LhButton type="primary" plain>Plain</LhButton>
+    </>
+  )
+}
+```
+
+## Button Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| type | Button type | `'text' \| 'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | — | `'text'` |
+| size | Size | `'large' \| 'middle' \| 'small'` | — | From ConfigProvider |
+| loading | Loading state | `boolean` | — | `false` |
+| disabled | Disabled state | `boolean` | — | `false` |
+| plain | Plain style | `boolean` | — | `false` |
+| block | Block (width 100%) | `boolean` | — | `false` |
+| round | Rounded corners | `boolean` | — | `false` |
+| circle | Circle | `boolean` | — | `false` |
+| icon | Icon name | `LhIconName` | — | — |
+| nativeType | Native type attribute | `'button' \| 'submit' \| 'reset'` | — | `'button'` |
+| href | Renders as `<a>` when provided | `string` | — | — |
+| target | target for href mode | `string` | — | — |
+| themeVars | Component-level theme variables | `Record<string, string>` | — | — |
+| bgPattern | Component-level background pattern | `string` | — | — |
+| sx | Layout shorthand | `SxProps` | — | — |
+
+## Button events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onClick | Fired on click (not fired when disabled / loading) | `(event: MouseEvent) => void` | `@click` |
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/button'
+```

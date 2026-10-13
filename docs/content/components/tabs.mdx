@@ -1,0 +1,88 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import TabsBasic from '@site/demos/tabs/basic'
+
+# Tabs 标签页
+
+选项卡切换组件，支持受控 / 非受控、卡片 / 线条两种外观、页签关闭与新增、完整键盘导航。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <TabsBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhTabs, LhTabPane } from '@lh-ui/react'
+
+export default function Demo() {
+  const [value, setValue] = useState('ink')
+
+  return (
+    <LhTabs value={value} onChange={(name) => setValue(name)}>
+      <LhTabPane name="ink" label="水墨">
+        水墨晕染，气韵生动。
+      </LhTabPane>
+      <LhTabPane name="danqing" label="丹青">
+        丹青设色，金碧辉映。
+      </LhTabPane>
+    </LhTabs>
+  )
+}
+```
+
+## Tabs Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| value | 当前激活页签的 name（受控） | `string` | — | — |
+| defaultValue | 当前激活页签的 name（非受控默认值） | `string` | — | — |
+| type | 外观 | `'line' \| 'card'` | — | `'line'` |
+| closable | 页签是否可关闭 | `boolean` | — | `false` |
+| addable | 是否显示新增按钮 | `boolean` | — | `false` |
+| tabPosition | 页签位置 | `'top' \| 'bottom'` | — | `'top'` |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+### TabPane Props
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| name | 页签唯一标识（作为稳定键，不建议动态修改） | `string` | — |
+| label | 页签标题 | `ReactNode` | — |
+| disabled | 是否禁用 | `boolean` | `false` |
+| children | 页签内容 | `ReactNode` | — |
+
+## Tabs 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onChange | 激活页签变化时触发 | `(name: string) => void` | `@change` |
+| onRemove | 关闭页签时触发（页签的显隐由业务侧控制） | `(name: string) => void` | `@remove` |
+| onAdd | 新增按钮点击时触发 | `() => void` | `@add` |
+
+:::tip[受控 / 非受控]
+传 `value` 即受控，传 `defaultValue` 走非受控内部态。两种模式下 `onChange` 都会触发。删除激活页签时，非受控模式自动切到相邻可用页签（对齐 plus 的 `getNameAfterRemove`）；受控模式交由业务侧在 `onRemove` 里处理。
+:::
+
+:::warning[子节点限制]
+`children` 必须直接是 `LhTabPane`（可用 `.map` 渲染，可用 `Fragment` 平铺包裹，但不可被自定义组件包裹）—— 父组件靠 `Children.forEach` 下钻收集页签记录，自定义包裹层会导致收集失败。
+:::
+
+## 键盘交互
+
+遵循 APG tabs pattern：焦点在页签按钮上时，`ArrowRight` / `ArrowLeft`（纵向为 `ArrowDown` / `ArrowUp`）在可用页签间移动并激活，跳过禁用项；`Home` / `End` 跳到首 / 末项；`Delete` / `Backspace` 关闭当前页签（需 `closable`）。仅激活页签 `tabindex=0`，其余为 `-1`（roving tabindex）。
+
+## 无障碍
+
+页签栏为 `role="tablist"`，页签为 `role="tab"` 并带 `aria-selected` / `aria-controls`，面板为 `role="tabpanel"` 并带 `aria-labelledby`，id 由 `useId()` 生成、SSR 稳定。非激活面板以 `hidden` 属性移出无障碍树。
+
+## ref
+
+`forwardRef<HTMLDivElement>` —— 根元素。`LhTabPane` 转发 `HTMLDivElement`。
+
+## 样式
+
+```ts
+import '@lh-ui/react/theme.css'
+import '@lh-ui/react/style/tabs'
+```

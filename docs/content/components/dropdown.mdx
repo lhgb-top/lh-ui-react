@@ -1,0 +1,96 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import DropdownBasic from '@site/demos/dropdown/basic'
+
+# Dropdown 下拉菜单
+
+将动作菜单折叠到触发器之下，悬停或点击展开。菜单为 `role="menu"` 语义，
+支持完整键盘导航（方向键 / Home / End / Enter / Esc）与 roving tabindex。
+
+## 基础用法
+
+<DemoBlock title="悬停 / 点击触发与命令式用法">
+  <DropdownBasic />
+</DemoBlock>
+
+```tsx
+import { LhButton, LhDropdown, LhDropdownItem } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhDropdown
+      onCommand={(command) => console.log(command)}
+      dropdown={
+        <>
+          <LhDropdownItem command="new">新建</LhDropdownItem>
+          <LhDropdownItem command="delete" disabled>
+            删除
+          </LhDropdownItem>
+        </>
+      }
+    >
+      <LhButton>展开</LhButton>
+    </LhDropdown>
+  )
+}
+```
+
+## Dropdown Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| children | 触发器节点 | `ReactNode` | — | — |
+| dropdown | 菜单内容（`LhDropdownItem` 列表，对应 plus 的 `#dropdown` 插槽） | `ReactNode` | — | — |
+| trigger | 触发方式 | `'hover' \| 'click' \| 'contextmenu'` | — | `'hover'` |
+| placement | 展示位置 | `LhDropdownPlacement` | `top` / `bottom`（含 `-start` / `-end`）等 | `'bottom-start'` |
+| disabled | 禁用 | `boolean` | — | `false` |
+| visible | 受控显隐 | `boolean` | — | — |
+| defaultVisible | 非受控默认显隐 | `boolean` | — | `false` |
+| hideOnClick | 点击菜单项后是否自动关闭 | `boolean` | — | `true` |
+| maxHeight | 菜单最大高度（超出滚动） | `string \| number` | — | — |
+| popperClass | 菜单自定义类名 | `string` | — | — |
+| themeVars | 组件级主题变量 | `Record<string, string>` | — | — |
+| sx | 快速布局属性（作用于触发器） | `SxProps` | — | — |
+
+## Dropdown 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onCommand | 菜单项被点击，抛出该项的 `command` | `(command: string \| number) => void` | `command` |
+| onVisibleChange | 显隐变化 | `(visible: boolean) => void` | `update:visible` |
+| onClickOutside | 点击菜单外部（同时内部会关闭） | `() => void` | `click-outside` |
+
+## DropdownItem Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| children | 菜单项内容 | `ReactNode` | — | — |
+| command | 命令标识，随 `onCommand` 抛出 | `string \| number` | — | — |
+| disabled | 是否禁用（不响应点击且不参与键盘导航） | `boolean` | — | `false` |
+| divided | 是否显示分隔线 | `boolean` | — | `false` |
+
+## DropdownItem 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onClick | 点击菜单项（与 `onCommand` 可共存） | `() => void` | — |
+
+## ref
+
+`forwardRef<LhDropdownInstance>`。`LhDropdownInstance` 暴露 `show()` / `hide()` / `toggle()` / `isVisible`。
+
+:::tip[键盘导航（APG menu pattern）]
+打开菜单后焦点落在首个启用项；`ArrowUp` / `ArrowDown` 循环移动并跳过禁用项，
+`Home` / `End` 直达首尾，`Enter` / `Space` 激活当前项，`Esc` 关闭并把焦点归还触发器。
+仅锚点项 `tabIndex={0}`，其余为 `-1`（roving tabindex）。
+:::
+
+:::tip[插槽 → prop]
+plus 用 `#dropdown` 插槽承载菜单，React 侧改为同名 `dropdown` prop；
+`contextmenu` 触发会阻止浏览器默认右键菜单。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/dropdown'
+```

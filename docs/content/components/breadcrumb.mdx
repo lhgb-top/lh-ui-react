@@ -1,0 +1,69 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import BreadcrumbBasic from '@site/demos/breadcrumb/basic'
+
+# Breadcrumb 面包屑
+
+显示当前页面在层级结构中的位置，可向上逐级导航。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <BreadcrumbBasic />
+</DemoBlock>
+
+```tsx
+import { LhBreadcrumb, LhBreadcrumbItem } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhBreadcrumb>
+      <LhBreadcrumbItem to="/">首页</LhBreadcrumbItem>
+      <LhBreadcrumbItem to="/components">组件</LhBreadcrumbItem>
+      <LhBreadcrumbItem>面包屑</LhBreadcrumbItem>
+    </LhBreadcrumb>
+  )
+}
+```
+
+## Breadcrumb Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| separator | 分隔符字符 | `string` | — | `'/'` |
+| maxItems | 最大可见项数，超出折叠为「首项 + 省略号 + 末项」 | `number` | — | `0`（不折叠） |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+### BreadcrumbItem Props
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| to | 跳转地址；存在且非末项时渲染为链接 | `string` | — |
+| replace | 保留 plus API 兼容；React 侧原生 `<a>` 跳转不受此开关影响 | `boolean` | `false` |
+| children | 文案 | `ReactNode` | — |
+
+:::tip[受控 / 非受控]
+折叠状态为组件内部状态：点击省略号按钮即展开全部，无需外部介入。`maxItems` 传 `0` 或不传表示不折叠。
+:::
+
+:::warning[子节点限制]
+`children` 必须直接是 `LhBreadcrumbItem`（可用 `.map` 渲染），不可被自定义组件包裹 —— 父组件靠 `Children.toArray` 过滤子元素类型来注入索引，包裹会导致索引注入失败。与 lh-ui-plus 的 `collectPaneVnodes` 下钻限制一致。
+:::
+
+:::tip[路由对接]
+React 生态无全局路由，链接渲染为原生 `<a>` 直接导航。接入 React Router 时用 `onClick` 拦截并调用 `navigate`，或自行渲染 `<Link>` 代替 `to`。
+:::
+
+## 无障碍
+
+根元素为 `<nav aria-label>`，列表为 `<ol>`；末项输出 `aria-current="page"`，省略号按钮带 `aria-label`（语言包 `breadcrumb.more`）。
+
+## ref
+
+`forwardRef<HTMLElement>` —— `<nav>` 根元素。`LhBreadcrumbItem` 转发 `HTMLLIElement`。
+
+## 样式
+
+```ts
+import '@lh-ui/react/theme.css'
+import '@lh-ui/react/style/breadcrumb'
+```

@@ -1,0 +1,82 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import CheckboxBasic from '@site/demos/checkbox/basic'
+
+# Checkbox 多选框
+
+一组备选项中进行多选，支持单个使用与 `LhCheckboxGroup` 组合使用。
+
+## 基础用法
+
+<DemoBlock title="单个与组合">
+  <CheckboxBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhCheckbox, LhCheckboxGroup } from '@lh-ui/react'
+
+export default function Demo() {
+  const [checked, setChecked] = useState(false)
+  const [group, setGroup] = useState<string[]>(['ink'])
+
+  return (
+    <>
+      <LhCheckbox checked={checked} onChange={(val) => setChecked(val)}>
+        单个复选框
+      </LhCheckbox>
+
+      <LhCheckboxGroup value={group} onChange={(val) => setGroup(val as string[])}>
+        <LhCheckbox value="ink">水墨</LhCheckbox>
+        <LhCheckbox value="danqing">丹青</LhCheckbox>
+        <LhCheckbox value="blank">留白</LhCheckbox>
+      </LhCheckboxGroup>
+    </>
+  )
+}
+```
+
+## Checkbox Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| value | 选项值（在 Group 内生效） | `unknown` | — | — |
+| checked | 受控选中态（单独使用时） | `boolean` | — | — |
+| defaultChecked | 非受控默认选中 | `boolean` | — | `false` |
+| label | 显示文案 | `string` | — | — |
+| disabled | 禁用 | `boolean` | — | `false` |
+| indeterminate | 半选状态（只影响视觉，不产生值） | `boolean` | — | `false` |
+| size | 尺寸 | `'large' \| 'middle' \| 'small'` | — | 跟随 ConfigProvider |
+| name | 原生 name 属性（Group 透传） | `string` | — | — |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+## Checkbox 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onChange | 选中态变化（双参数） | `(checked: boolean, event: ChangeEvent) => void` | `@change` |
+
+## CheckboxGroup Props
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| value | 受控选中值数组 | `unknown[]` | — |
+| defaultValue | 非受控默认值 | `unknown[]` | `[]` |
+| disabled | 禁用全部子项 | `boolean` | `false` |
+| size | 子项尺寸 | `'large' \| 'middle' \| 'small'` | 跟随 ConfigProvider |
+| name | 透传给子项的原生 name | `string` | — |
+
+## CheckboxGroup 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onChange | 选中值数组变化 | `(value: unknown[]) => void` | `@change` |
+
+:::tip[半选状态]
+`indeterminate` 常用于「全选」中间态：视觉上是横线，但不会影响 `checked`。组件在 `useEffect` 内同步到原生 `input.indeterminate`。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/checkbox'
+```

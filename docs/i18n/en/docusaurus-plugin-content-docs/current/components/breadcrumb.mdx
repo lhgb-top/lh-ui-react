@@ -1,0 +1,69 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import BreadcrumbBasic from '@site/demos/breadcrumb/basic'
+
+# Breadcrumb
+
+Shows the position of the current page in a hierarchy, allowing navigation up one level at a time.
+
+## Basic usage
+
+<DemoBlock title="Basic usage">
+  <BreadcrumbBasic />
+</DemoBlock>
+
+```tsx
+import { LhBreadcrumb, LhBreadcrumbItem } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhBreadcrumb>
+      <LhBreadcrumbItem to="/">Home</LhBreadcrumbItem>
+      <LhBreadcrumbItem to="/components">Components</LhBreadcrumbItem>
+      <LhBreadcrumbItem>Breadcrumb</LhBreadcrumbItem>
+    </LhBreadcrumb>
+  )
+}
+```
+
+## Breadcrumb Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| separator | Separator character | `string` | — | `'/'` |
+| maxItems | Maximum number of visible items; extras collapse to "first + ellipsis + last" | `number` | — | `0` (no collapse) |
+| sx | Shorthand layout props | `SxProps` | — | — |
+
+### BreadcrumbItem Props
+
+| Prop | Description | Type | Default |
+| --- | --- | --- | --- |
+| to | Link target; rendered as a link when present and not the last item | `string` | — |
+| replace | Kept for plus API compatibility; native `<a>` navigation on the React side is unaffected by this switch | `boolean` | `false` |
+| children | Label text | `ReactNode` | — |
+
+:::tip[Controlled / uncontrolled]
+The collapsed state is internal: clicking the ellipsis button expands all items, no external involvement needed. Passing `maxItems` as `0` (or omitting it) disables collapsing.
+:::
+
+:::warning[Child node restriction]
+`children` must be `LhBreadcrumbItem` elements directly (you may render them with `.map`); they cannot be wrapped in a custom component — the parent injects indices by filtering child element types via `Children.toArray`, and wrapping breaks index injection. This matches the `collectPaneVnodes` descent restriction of lh-ui-plus.
+:::
+
+:::tip[Router integration]
+The React ecosystem has no universal router, so links render as native `<a>` elements that navigate directly. To integrate with React Router, intercept `onClick` and call `navigate`, or render your own `<Link>` instead of using `to`.
+:::
+
+## Accessibility
+
+The root element is `<nav aria-label>`, the list is an `<ol>`; the last item emits `aria-current="page"`, and the ellipsis button carries an `aria-label` (locale pack `breadcrumb.more`).
+
+## ref
+
+`forwardRef<HTMLElement>` — the `<nav>` root element. `LhBreadcrumbItem` forwards `HTMLLIElement`.
+
+## Styles
+
+```ts
+import '@lh-ui/react/theme.css'
+import '@lh-ui/react/style/breadcrumb'
+```

@@ -1,0 +1,84 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import DrawerBasic from '@site/demos/drawer/basic'
+
+# Drawer 抽屉
+
+从屏幕边缘滑出的抽屉面板，常用于详情查看、表单填写等需要较大展示空间的场景。
+与 Dialog 的差别：贴边展示、按方向滑动、面板尺寸作用于单边（宽或高）。
+
+## 基础用法
+
+<DemoBlock title="四个方向与自定义尺寸">
+  <DrawerBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhButton, LhDrawer } from '@lh-ui/react'
+
+export default function Demo() {
+  const [open, setOpen] = useState(false)
+  return (
+    <>
+      <LhButton onClick={() => setOpen(true)}>打开抽屉</LhButton>
+      <LhDrawer title="抽屉标题" open={open} onClose={() => setOpen(false)}>
+        抽屉内容
+      </LhDrawer>
+    </>
+  )
+}
+```
+
+## Drawer Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| children | 主体内容 | `ReactNode` | — | — |
+| open | 是否显示（受控） | `boolean` | — | `false` |
+| title | 标题 | `ReactNode` | — | — |
+| direction | 滑出方向 | `'right' \| 'left' \| 'top' \| 'bottom'` | — | `'right'` |
+| size | 面板尺寸（数字 → px，字符串支持百分比） | `string \| number` | — | `'30%'` |
+| showClose | 是否显示关闭按钮 | `boolean` | — | `true` |
+| maskClosable | 点击遮罩是否关闭 | `boolean` | — | `false` |
+| closeOnEsc | 按 Esc 是否关闭 | `boolean` | — | `true` |
+| lockScroll | 是否锁定 body 滚动（锁定时同时圈住焦点） | `boolean` | — | `true` |
+| beforeClose | 关闭前拦截，调 `done` 才继续 | `(done: () => void) => void` | — | — |
+| zIndex | z-index（不传走全局递增体系） | `number` | — | — |
+| header | 头部内容（覆盖默认标题栏） | `ReactNode` | — | — |
+| footer | 底部内容（按钮区） | `ReactNode` | — | — |
+| themeVars | 组件级主题变量 | `Record<string, string>` | — | — |
+| sx | 快速布局属性（作用于面板） | `SxProps` | — | — |
+
+## Drawer 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onClose | 关闭请求（遮罩 / Esc / 关闭按钮，经 `beforeClose` 拦截后触发） | `() => void` | `update:modelValue` / `close` |
+| onOpen | 打开时触发（DOM 挂载后、进入动画前） | `() => void` | `open` |
+| onOpened | 打开动画结束 | `() => void` | `opened` |
+| onCloseStart | 关闭请求被接受、开始离开动画 | `() => void` | — |
+| onClosed | 关闭动画结束、DOM 卸载后 | `() => void` | `closed` |
+
+## ref
+
+`forwardRef<LhDrawerInstance>`。`LhDrawerInstance` 暴露 `close()`（走 `beforeClose` 拦截）与 `isOpen`。
+
+:::tip[遮罩默认不可点穿]
+`maskClosable` 默认 `false`（core 的 `canDrawerClose` 默认拒绝遮罩点击），避免误触；
+plus 的 `closeOnClickModal` 默认 `true`，迁移时需显式声明。
+:::
+
+:::tip[焦点圈]
+仅在 `lockScroll` 打开时圈住焦点（`shouldDrawerTrapFocus`）：抽屉常作为轻量面板，
+不锁定滚动时保留背后表单的 Tab 序列。关闭时焦点归还。
+:::
+
+:::tip[尺寸方向]
+`size` 为数字时归一化为 px；左右方向作用于面板 `width`，上下方向作用于 `height`。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/drawer'
+```

@@ -1,0 +1,50 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@lh-ui/react": [
+        "./src/index.ts"
+      ],
+      "@lh-ui/share": [
+        "../lh-ui-share/src/index.ts"
+      ],
+      "@lh-ui/share/core/*": [
+        "../lh-ui-share/src/core/*"
+      ],
+      "@lh-ui/share/utils": [
+        "../lh-ui-share/src/utils"
+      ],
+      "@lh-ui/share/utils/*": [
+        "../lh-ui-share/src/utils/*"
+      ],
+      "@lh-ui/share/constants": [
+        "../lh-ui-share/src/constants"
+      ],
+      "@lh-ui/share/constants/*": [
+        "../lh-ui-share/src/constants/*"
+      ],
+      "@lh-ui/share/theme": [
+        "../lh-ui-share/src/theme"
+      ],
+      "@lh-ui/share/theme/*": [
+        "../lh-ui-share/src/theme/*"
+      ],
+      "@lh-ui/share/locales": [
+        "../lh-ui-share/src/locales"
+      ],
+      "@lh-ui/share/locales/*": [
+        "../lh-ui-share/src/locales/*"
+      ],
+      "@lh-ui/share/types": [
+        "../lh-ui-share/src/types"
+      ],
+      "@lh-ui/share/types/*": [
+        "../lh-ui-share/src/types/*"
+      ]
+    }
+  }
+}

@@ -1,0 +1,141 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import FormBasic from '@site/demos/form/basic'
+
+# Form
+
+A composite component made of `LhForm` + `LhFormItem`, providing data validation, error messages, and label alignment.
+
+## Basic usage
+
+<DemoBlock title="Validation form">
+  <FormBasic />
+</DemoBlock>
+
+```tsx
+import { useRef, useState } from 'react'
+import { LhButton, LhForm, LhFormItem, LhInput, LhSelect } from '@lh-ui/react'
+import type { LhFormInstance, LhFormRule } from '@lh-ui/react'
+
+interface FormData {
+  name: string
+  style: string
+}
+
+const rules: Record<string, LhFormRule[]> = {
+  name: [{ required: true, message: 'Please enter the work name', trigger: 'blur' }],
+  style: [{ required: true, message: 'Please select a style', trigger: 'change' }],
+}
+
+export default function Demo() {
+  const [formData, setFormData] = useState<FormData>({ name: '', style: '' })
+  const formRef = useRef<LhFormInstance>(null)
+
+  const handleSubmit = async () => {
+    const valid = await formRef.current?.validate()
+    if (valid) alert(`Submitted: ${formData.name} / ${formData.style}`)
+  }
+
+  const handleReset = () => {
+    formRef.current?.resetFields()
+    setFormData({ name: '', style: '' })
+  }
+
+  return (
+    <LhForm ref={formRef} model={formData} rules={rules} labelWidth="80px">
+      <LhFormItem label="Work name" prop="name">
+        <LhInput
+          value={formData.name}
+          onChange={(val) => setFormData((prev) => ({ ...prev, name: val }))}
+        />
+      </LhFormItem>
+      <LhFormItem label="Style" prop="style">
+        <LhSelect
+          value={formData.style}
+          onChange={(val) => setFormData((prev) => ({ ...prev, style: val as string }))}
+          options={[{ label: 'Ink', value: 'ink' }]}
+        />
+      </LhFormItem>
+      <LhFormItem>
+        <LhButton type="primary" onClick={handleSubmit}>Submit</LhButton>
+        <LhButton onClick={handleReset}>Reset</LhButton>
+      </LhFormItem>
+    </LhForm>
+  )
+}
+```
+
+## Form Props
+
+| Prop | Description | Type | Default |
+| --- | --- | --- | --- |
+| model | Form data object (required) | `Record<string, unknown>` | — |
+| rules | Validation rules, keyed by field name | `Record<string, LhFormRule[]>` | — |
+| labelWidth | Label width | `string \| number` | — |
+| labelPosition | Label position | `'left' \| 'right' \| 'top'` | `'right'` |
+| inline | Inline layout | `boolean` | `false` |
+| disabled | Disable all children | `boolean` | `false` |
+| size | Child size | `'large' \| 'middle' \| 'small'` | Follows ConfigProvider |
+| onSubmit | Native submit event (already preventDefault'd) | `(event: FormEvent) => void` | — |
+
+## FormItem Props
+
+| Prop | Description | Type | Default |
+| --- | --- | --- | --- |
+| label | Label text | `string` | — |
+| prop | Field name (supports dot paths, mapped to a key of model) | `string` | — |
+| rules | Item-level rules (override form-level rules of the same name) | `LhFormRule[]` | — |
+| required | Required asterisk (renders the marker only; validation semantics come from rules) | `boolean` | `false` |
+| labelWidth | Override the form-level label width | `string \| number` | — |
+| errorMessage | Custom error message | `string` | — |
+| showMessage | Whether to show the error message | `boolean` | `true` |
+
+## LhFormRule
+
+| Prop | Description | Type |
+| --- | --- | --- |
+| required | Whether the field is required | `boolean` |
+| message | Validation failure message | `string` |
+| trigger | Trigger method | `'blur' \| 'change'` |
+| validator | Custom validator function (may return a Promise; async validation is awaited correctly) | `(value, model) => string \| undefined \| Promise<string \| undefined>` |
+| min / max | Minimum / maximum (number or length) | `number` |
+| pattern | Regex validation | `RegExp` |
+
+## Form ref methods
+
+`LhFormInstance` (exposed via `forwardRef` + `useImperativeHandle`):
+
+| Method | Description | Return value |
+| --- | --- | --- |
+| validate | Validate all fields | `Promise<boolean>` |
+| validateField | Validate a single field | `Promise<boolean>` |
+| resetFields | Reset all fields to their initial values | `void` |
+| resetField | Reset a single field | `void` |
+
+```tsx
+const formRef = useRef<LhFormInstance>(null)
+const ok = await formRef.current?.validate()
+```
+
+:::tip[Async validation]
+This library **fixes plus's async validation flaw**: plus's `validateField` uses `Promise.resolve(!message)` and does not await the async validator's Promise, so async validation always returns `true`. The React version explicitly awaits the thenable before deciding. See the [migration guide](../guide/migration.md#10-form-的异步校验修正).
+:::
+
+:::tip[Field registration]
+`LhFormItem` registers its validator with the form inside `useEffect` and unregisters automatically on unmount. Fields do not need to be declared in `rules` beforehand — a field present in model but absent from rules gets its initial value patched in at registration time.
+:::
+
+:::tip[Trigger semantics (React enhancement)]
+share's `validateFormField` does not interpret `trigger`; the timing is wired by this layer: `trigger: 'blur'` (the default) validates when the FormItem blurs, and `trigger: 'change'` validates when the content area fires a change. Rules without a `trigger` only run on blur and on `validate()`, so errors do not repeatedly appear while typing.
+
+Change validation reads the **new value of the event target** rather than a model snapshot — React's state updates and event dispatch are not in the same tick, so reading the model back would lag by one tick. Change events of native controls (input / textarea / native select) are captured as they bubble up to the content area; custom controls have no native change event (an option click in LhSelect only produces a click), so they trigger it proactively with the new value via `validateChange(value)` from the FormItem context.
+:::
+
+:::tip[Reset clears errors (React enhancement)]
+Besides restoring the model to the initial value snapshot, `resetFields()` increments an internal `resetVersion`; each FormItem watches for the version change and clears its own error state. **The external controlled state still needs to be synced manually** (like `setFormData(initial)` in the demo) — React cannot write the model on your behalf the way Vue's reactive chain does.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/form'
+```

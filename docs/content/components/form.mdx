@@ -1,0 +1,148 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import FormBasic from '@site/demos/form/basic'
+
+# Form 表单
+
+由 `LhForm` + `LhFormItem` 组成的复合组件，提供数据校验、错误提示、标签对齐等能力。
+
+## 基础用法
+
+<DemoBlock title="校验表单">
+  <FormBasic />
+</DemoBlock>
+
+```tsx
+import { useRef, useState } from 'react'
+import { LhButton, LhForm, LhFormItem, LhInput, LhSelect } from '@lh-ui/react'
+import type { LhFormInstance, LhFormRule } from '@lh-ui/react'
+
+interface FormData {
+  name: string
+  style: string
+}
+
+const rules: Record<string, LhFormRule[]> = {
+  name: [{ required: true, message: '请输入作品名称', trigger: 'blur' }],
+  style: [{ required: true, message: '请选择画风', trigger: 'change' }],
+}
+
+export default function Demo() {
+  const [formData, setFormData] = useState<FormData>({ name: '', style: '' })
+  const formRef = useRef<LhFormInstance>(null)
+
+  const handleSubmit = async () => {
+    const valid = await formRef.current?.validate()
+    if (valid) alert(`提交成功：${formData.name} / ${formData.style}`)
+  }
+
+  const handleReset = () => {
+    formRef.current?.resetFields()
+    setFormData({ name: '', style: '' })
+  }
+
+  return (
+    <LhForm ref={formRef} model={formData} rules={rules} labelWidth="80px">
+      <LhFormItem label="作品名称" prop="name">
+        <LhInput
+          value={formData.name}
+          onChange={(val) => setFormData((prev) => ({ ...prev, name: val }))}
+        />
+      </LhFormItem>
+      <LhFormItem label="画风" prop="style">
+        <LhSelect
+          value={formData.style}
+          onChange={(val) => setFormData((prev) => ({ ...prev, style: val as string }))}
+          options={[{ label: '水墨', value: 'ink' }]}
+        />
+      </LhFormItem>
+      <LhFormItem>
+        <LhButton type="primary" onClick={handleSubmit}>提交</LhButton>
+        <LhButton onClick={handleReset}>重置</LhButton>
+      </LhFormItem>
+    </LhForm>
+  )
+}
+```
+
+## Form Props
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| model | 表单数据对象（必填） | `Record<string, unknown>` | — |
+| rules | 校验规则，键为字段名 | `Record<string, LhFormRule[]>` | — |
+| labelWidth | 标签宽度 | `string \| number` | — |
+| labelPosition | 标签位置 | `'left' \| 'right' \| 'top'` | `'right'` |
+| inline | 行内布局 | `boolean` | `false` |
+| disabled | 禁用全部子项 | `boolean` | `false` |
+| size | 子项尺寸 | `'large' \| 'middle' \| 'small'` | 跟随 ConfigProvider |
+| onSubmit | 原生提交事件（已 preventDefault） | `(event: FormEvent) => void` | — |
+
+## FormItem Props
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| label | 标签文案 | `string` | — |
+| prop | 字段名（支持点号路径，对应 model 的键） | `string` | — |
+| rules | item 级规则（同名时覆盖 form 级） | `LhFormRule[]` | — |
+| required | 必填星号（仅渲染标记，校验语义由 rules 提供） | `boolean` | `false` |
+| labelWidth | 覆盖 form 级标签宽度 | `string \| number` | — |
+| errorMessage | 自定义错误信息 | `string` | — |
+| showMessage | 显示错误提示 | `boolean` | `true` |
+
+## LhFormRule
+
+| 属性 | 说明 | 类型 |
+| --- | --- | --- |
+| required | 是否必填 | `boolean` |
+| message | 校验失败信息 | `string` |
+| trigger | 触发方式 | `'blur' \| 'change'` |
+| validator | 自定义校验函数（可返回 Promise，异步校验会正确等待） | `(value, model) => string \| undefined \| Promise<string \| undefined>` |
+| min / max | 最小 / 最大值（数字或长度） | `number` |
+| pattern | 正则校验 | `RegExp` |
+
+## Form ref 方法
+
+`LhFormInstance`（通过 `forwardRef` + `useImperativeHandle` 暴露）：
+
+| 方法 | 说明 | 返回值 |
+| --- | --- | --- |
+| validate | 校验全部字段 | `Promise<boolean>` |
+| validateField | 校验单个字段 | `Promise<boolean>` |
+| resetFields | 重置全部字段到初始值 | `void` |
+| resetField | 重置单个字段 | `void` |
+
+```tsx
+const formRef = useRef<LhFormInstance>(null)
+const ok = await formRef.current?.validate()
+```
+
+:::tip[异步校验]
+本库**修正了 plus 的异步校验缺陷**：plus 的 `validateField` 用 `Promise.resolve(!message)` 不会等待异步 validator 的 Promise，异步校验恒返回 `true`。React 版显式等待 thenable 完成后再判定。详见 [迁移指南](../guide/migration.md#10-form-的异步校验修正)。
+:::
+
+:::tip[字段注册]
+`LhFormItem` 在 `useEffect` 内向 form 注册校验器，卸载时自动注销。字段无需预先声明在 `rules` 里——`rules` 里没有但 model 里有的字段，初始值会在注册时补拍。
+:::
+
+:::tip[trigger 的语义（React 增强）]
+share 的 `validateFormField` 不解释 `trigger`，触发时机由本层接线：`trigger: 'blur'`（默认）
+随 FormItem 失焦校验，`trigger: 'change'` 随内容区 change 校验。未标注 `trigger` 的规则
+只在失焦与 `validate()` 时运行，输入过程中不会反复报错。
+
+change 校验取**事件目标的新值**而非 model 快照——React 的状态更新与事件派发不在同一拍，
+回头读 model 会滞后一拍。原生控件（input / textarea / 原生 select）的 change 事件
+冒泡到内容区即被捕获；自定义控件没有原生 change 事件（LhSelect 的选项点击只产生 click），
+通过 FormItem 上下文的 `validateChange(value)` 主动带着新值触发。
+:::
+
+:::tip[重置清错误（React 增强）]
+`resetFields()` 除了把 model 还原到初始值快照，还会自增内部 `resetVersion`，各 FormItem
+监听到版本变化即清空自身错误态。**外部受控状态仍需自行同步**（如 demo 里的
+`setFormData(initial)`）——React 无法像 Vue 的 reactive 链路那样代写 model。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/form'
+```

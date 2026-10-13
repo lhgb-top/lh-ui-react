@@ -1,0 +1,27 @@
+name: CI
+
+# 每次推 master 或提 PR 时跑全量门禁：lint / typecheck / test / build / verify / docs。
+# 发版链（release.yml）不重新构建，依赖本流水线与本地 prepublishOnly 的双重验证。
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - run: pnpm verify:dts
+      - run: pnpm docs:build

@@ -1,0 +1,74 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import RadioBasic from '@site/demos/radio/basic'
+
+# Radio
+
+Selects one option from a set; can be used standalone or composed with `LhRadioGroup`.
+
+## Basic usage
+
+<DemoBlock title="Grouped radios">
+  <RadioBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhRadio, LhRadioGroup } from '@lh-ui/react'
+
+export default function Demo() {
+  const [value, setValue] = useState('ink')
+
+  return (
+    <LhRadioGroup value={value} onChange={(val) => setValue(val as string)}>
+      <LhRadio value="ink">Ink</LhRadio>
+      <LhRadio value="danqing">Danqing</LhRadio>
+      <LhRadio value="blank">Blank</LhRadio>
+    </LhRadioGroup>
+  )
+}
+```
+
+## Radio Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| value | Option value (required) | `unknown` | — | — |
+| checked | Controlled checked state (when used standalone) | `boolean` | — | — |
+| defaultChecked | Uncontrolled default checked | `boolean` | — | `false` |
+| label | Display text | `string` | — | — |
+| disabled | Whether to disable | `boolean` | — | `false` |
+| size | Size | `'large' \| 'middle' \| 'small'` | — | Follows ConfigProvider |
+| name | Native name attribute (passed through by the Group) | `string` | — | — |
+| sx | Shorthand layout props | `SxProps` | — | — |
+
+## Radio events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onChange | Emitted when selected (two arguments) | `(checked: boolean, event: ChangeEvent) => void` | `@change` |
+
+## RadioGroup Props
+
+| Prop | Description | Type | Default |
+| --- | --- | --- | --- |
+| value | Controlled selected value | `unknown` | — |
+| defaultValue | Uncontrolled default value | `unknown` | — |
+| disabled | Disable all children | `boolean` | `false` |
+| size | Child size | `'large' \| 'middle' \| 'small'` | Follows ConfigProvider |
+| name | Native name attribute passed through to children | `string` | — |
+
+## RadioGroup events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onChange | Emitted when the selection changes; the callback argument is the option's value | `(value: unknown) => void` | `@change` |
+
+:::tip[onChange argument difference]
+`LhRadio`'s `onChange` callback is `(checked, event)`; `LhRadioGroup`'s `onChange` callback is directly the selected option's `value` — consistent with CheckboxGroup.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/radio'
+```

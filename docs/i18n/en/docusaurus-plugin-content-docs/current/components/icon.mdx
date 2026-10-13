@@ -1,0 +1,57 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import IconBasic from '@site/demos/icon/basic'
+
+# Icon
+
+A semantic icon component based on the built-in SVG icon set.
+
+## Basic usage
+
+<DemoBlock title="Basic usage">
+  <IconBasic />
+</DemoBlock>
+
+```tsx
+import { LhIcon } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <>
+      <LhIcon name="search" />
+      <LhIcon name="search" size={32} />
+      <LhIcon name="search" color="var(--lh-primary-color, #1677ff)" />
+      <LhIcon name="loading" color="var(--lh-success-color, #52c41a)" />
+    </>
+  )
+}
+```
+
+## Icon Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| name | Icon name | `LhIconName` | See `@lh-ui/share/core/icon` | — |
+| size | Size | `number \| 'small' \| 'middle' \| 'large'` | — | From ConfigProvider |
+| color | Color | `string` | — | `currentColor` |
+| decorative | Decorative mode (outputs `aria-hidden`) | `boolean` | — | `true` |
+| ariaLabel | Accessibility label (effective when `decorative={false}`) | `string` | — | — |
+| themeVars | Component-level theme variables | `Record<string, string>` | — | — |
+| sx | Layout shorthand | `SxProps` | — | — |
+
+:::tip[Accessibility]
+`decorative` is `true` by default, so the icon is invisible to screen readers. If the icon carries meaning, pass `decorative={false}` and `ariaLabel`; it then renders `<svg role="img" aria-label>`.
+:::
+
+## children fallback
+
+When `name` is absent but `children` is provided, the component renders the children directly (useful for wrapping a custom SVG):
+
+```tsx
+<LhIcon><MyCustomSvg /></LhIcon>
+```
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/icon'
+```

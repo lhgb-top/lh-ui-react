@@ -1,0 +1,56 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import AlertBasic from '@site/demos/alert/basic'
+
+# Alert
+
+Displays important informational messages on the page.
+
+## Basic usage
+
+<DemoBlock title="Basic usage">
+  <AlertBasic />
+</DemoBlock>
+
+```tsx
+import { LhAlert } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhAlert type="success" title="Success" showIcon closable>
+      This is a success message.
+    </LhAlert>
+  )
+}
+```
+
+## Alert Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| type | Type | `'info' \| 'success' \| 'warning' \| 'danger'` | — | `'info'` |
+| title | Title (the title row is not rendered when absent) | `ReactNode` | — | — |
+| closable | Closable | `boolean` | — | `false` |
+| showIcon | Whether to show the type icon | `boolean` | — | `false` |
+| plain | Plain style (light outline) | `boolean` | — | `false` |
+| closeLabel | Accessibility name of the close button (falls back to the language pack's `alert.close`) | `string` | — | `'Close alert'` |
+| sx | Layout shorthand | `SxProps` | — | — |
+
+## Alert events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onClose | Fired when the close button is clicked | `(event: MouseEvent) => void` | `@close` |
+
+:::tip[Closing is internally uncontrolled]
+After the close button is clicked, the Alert unmounts directly (no transition) and fires `onClose`. To make it reopenable, wrap it in a conditional render driven by external state instead of relying on internal state.
+:::
+
+:::tip[Accessibility live region]
+When `type` is `warning` / `danger`, it outputs `role="alert"` (announced immediately); `info` / `success` output `role="status"` (queued announcement), avoiding interrupting the user's current action.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/alert'
+```

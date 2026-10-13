@@ -1,0 +1,94 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import DialogBasic from '@site/demos/dialog/basic'
+
+# Dialog 对话框
+
+在保留当前页面状态的情况下，告知用户并承载相关操作。
+
+## 基础用法
+
+<DemoBlock title="受控对话框">
+  <DialogBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhButton, LhDialog } from '@lh-ui/react'
+
+export default function Demo() {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <>
+      <LhButton type="primary" onClick={() => setOpen(true)}>
+        打开对话框
+      </LhButton>
+      <LhDialog
+        open={open}
+        title="提示"
+        width="420px"
+        footer={
+          <>
+            <LhButton onClick={() => setOpen(false)}>取消</LhButton>
+            <LhButton type="primary" onClick={() => setOpen(false)}>确定</LhButton>
+          </>
+        }
+        onClose={() => setOpen(false)}
+      >
+        <p>这是一个受控对话框。</p>
+      </LhDialog>
+    </>
+  )
+}
+```
+
+## Dialog Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| open | 是否打开（**纯受控**） | `boolean` | — | `false` |
+| title | 标题（无 header 时也作 aria-label 兜底） | `string` | — | — |
+| width | 宽度 | `string \| number` | — | — |
+| fullscreen | 全屏 | `boolean` | — | `false` |
+| showClose | 显示关闭按钮 | `boolean` | — | `true` |
+| closeOnClickModal | 点击遮罩关闭 | `boolean` | — | `true` |
+| closeOnPressEscape | 按 Esc 关闭 | `boolean` | — | `true` |
+| draggable | 可拖拽（拖标题栏） | `boolean` | — | `false` |
+| center | 标题与底部居中 | `boolean` | — | `false` |
+| position | 自定义定位偏移 | `{ top?: string; left?: string }` | — | — |
+| lockScroll | 打开时锁定 body 滚动 | `boolean` | — | `true` |
+| beforeClose | 关闭前拦截（返回 `false` / `Promise<false>` 则不关） | `() => boolean \| Promise<boolean>` | — | — |
+| top | 与顶部的距离 | `string` | — | — |
+| zIndex | 层级（默认由 useLhZIndex 递增分配） | `number` | — | — |
+| header | 自定义头部（覆盖 title） | `ReactNode` | — | — |
+| footer | 自定义底部 | `ReactNode` | — | — |
+| themeVars | 组件级主题变量 | `Record<string, string>` | — | — |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+## Dialog 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onClose | 请求关闭（遮罩 / Esc / 关闭按钮触发，beforeClose 拦截后不调） | `() => void` | `update:modelValue` |
+| onOpen | 打开瞬间触发（DOM 已挂载） | `() => void` | `@open` |
+| onOpened | 打开过渡结束后触发 | `() => void` | `@opened` |
+| onCloseStart | 关闭过渡开始时触发 | `() => void` | `@close` |
+| onClosed | 关闭过渡结束后触发（DOM 卸载） | `() => void` | `@closed` |
+
+## ref
+
+`forwardRef<HTMLDivElement>`。`LhDialogInstance` 暂无命令式方法。
+
+:::tip[纯受控语义]
+与 plus 不同，本库 Dialog **没有内部 isVisible 中间态**：`open` 完全由外部 state 持有，任何关闭路径只调 `onClose`。详见 [迁移指南](../guide/migration.md#8-dialog-纯受控)。
+:::
+
+:::tip[多弹层 Esc]
+`useLhOverlayStack` 维护打开顺序栈，Esc 只关栈顶弹层，避免一次按键带走全部弹层。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/dialog'
+```

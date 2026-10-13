@@ -1,0 +1,70 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import LoadingBasic from '@site/demos/loading/basic'
+
+# Loading 加载遮罩
+
+全屏或局部的加载遮罩：提交中、列表加载等场景冻结用户交互并给出等待提示。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <LoadingBasic />
+</DemoBlock>
+
+```tsx
+import { loading } from '@lh-ui/react'
+import '@lh-ui/react/style/loading'
+
+const handle = loading.show({ text: '提交中…' })
+setTimeout(() => handle.close(), 1500)
+
+// 挂到指定区域而非全屏
+loading.show({ target: cardRef.current })
+```
+
+## loading 方法
+
+| 方法 | 说明 | 返回值 |
+| --- | --- | --- |
+| show | 显示遮罩 | `{ close }` |
+| closeAll | 关闭全部活动实例（跳过退场动画） | `void` |
+
+```tsx
+const handle = loading.show({ target: '#card', lock: true })
+handle.close()
+```
+
+## LhLoadingOptions
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| target | 挂载目标：选择器字符串 / 元素；不传为全屏 | `string \| HTMLElement` | 全屏（body） |
+| text | 提示文案 | `string` | 语言包（zh-CN：`加载中…`） |
+| background | 遮罩背景色（CSS background 值） | `string` | `rgba(255,255,255,72%)` |
+| lock | 是否锁定滚动（全屏锁 body，指定目标锁目标自身） | `boolean` | `true` |
+
+:::tip[与 message / notification 的差异]
+loading 挂到**任意目标元素**（全屏或局部），无法共用单例容器，故走 per-instance
+`createRoot`：每个实例持有自己的 root 与还原句柄。同一目标重复 `show` 会先卸载旧实例。
+:::
+
+:::tip[局部遮罩的交互冻结]
+非全屏遮罩除锁定目标滚动外，还对目标设置 `inert` 冻结其内容交互；关闭后自动还原
+`overflow` / `inert` / `position`（`static` 定位的目标会被临时补 `relative`）。
+:::
+
+:::tip[无障碍]
+遮罩为 `role="status"` + `aria-busy="true"`，文案作为 `aria-label` 播报；
+旋转图标为装饰图形（`aria-hidden`）。
+:::
+
+:::warning[按需引入样式]
+遮罩复用 button 的 spinner 画法（`.lh-button__spinner`），页面需同时引入
+`@lh-ui/react/style/button` 才有旋转动画。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/loading'
+```

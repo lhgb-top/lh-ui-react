@@ -1,0 +1,81 @@
+/**
+ * lh-ui-react 文档站全局样式（Docusaurus）
+ *
+ * 取代 VitePress 的 docs/.vitepress/theme/index.ts + style.css：
+ * - share 主题变量与全部组件样式在此全量注入（docs 站不做按需裁剪）
+ * - demo 容器的 --ifm-* 变量适配（替代原 --vp-c-* 变量）
+ * - 暗色模式：<html data-theme="dark"> 由 Docusaurus 切换，
+ *   share var-dark.scss 的 [data-theme='dark'], .dark 选择器直接命中
+ */
+
+/* share 设计令牌：必须在组件样式之前引入 */
+@use '@lh-ui/share/styles/theme/common/var.scss';
+@use '@lh-ui/share/styles/theme/common/var-dark.scss';
+
+/* 全部组件样式（与 src/index.ts 导出清单一致，新增组件在此追加） */
+@use '@lh-ui/share/styles/config-provider';
+@use '@lh-ui/share/styles/button';
+@use '@lh-ui/share/styles/icon';
+@use '@lh-ui/share/styles/tag';
+@use '@lh-ui/share/styles/input';
+@use '@lh-ui/share/styles/select';
+@use '@lh-ui/share/styles/checkbox';
+@use '@lh-ui/share/styles/radio';
+@use '@lh-ui/share/styles/switch';
+@use '@lh-ui/share/styles/form';
+@use '@lh-ui/share/styles/dialog';
+@use '@lh-ui/share/styles/tooltip';
+@use '@lh-ui/share/styles/message';
+@use '@lh-ui/share/styles/notification';
+@use '@lh-ui/share/styles/loading';
+@use '@lh-ui/share/styles/divider';
+@use '@lh-ui/share/styles/space';
+@use '@lh-ui/share/styles/card';
+@use '@lh-ui/share/styles/empty';
+@use '@lh-ui/share/styles/skeleton';
+@use '@lh-ui/share/styles/alert';
+@use '@lh-ui/share/styles/breadcrumb';
+@use '@lh-ui/share/styles/pagination';
+@use '@lh-ui/share/styles/tabs';
+@use '@lh-ui/share/styles/steps';
+@use '@lh-ui/share/styles/popover';
+@use '@lh-ui/share/styles/popconfirm';
+@use '@lh-ui/share/styles/drawer';
+@use '@lh-ui/share/styles/dropdown';
+
+/* -------------------------------------------------------------------------- */
+/* demo 容器与布局辅助类                                                       */
+/* -------------------------------------------------------------------------- */
+
+.demo-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.demo-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* lh 组件在 Docusaurus 内容区内的基线对齐修正（主题给按钮 / 输入框设了全局样式） */
+.markdown button.lh-button {
+  margin: 0;
+}
+
+.markdown input.lh-input__inner,
+.markdown textarea.lh-input__inner {
+  margin: 0;
+  font-size: inherit;
+}
+
+/* demo 区内的列表去掉 Docusaurus 默认的左缩进与项目符号 */
+.demo-block ul.lh-dropdown__menu,
+.demo-block ol.lh-breadcrumb__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

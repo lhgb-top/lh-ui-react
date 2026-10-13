@@ -1,0 +1,49 @@
+import ThemeStudio from '@site/src/components/ThemeStudio'
+
+# 主题定制台
+
+主题定制台是一个交互式工具：选预设、逐令牌改色、实时预览，最后导出一份可直接用的 SCSS 文件。
+
+<ThemeStudio />
+
+## 使用方法
+
+1. **选预设**：顶部下拉框切换五套内置色板（青花瓷 / 松花绿 / 朱砂 / 水墨 / 藤黄），预设只覆盖它声明的令牌，其余保持当前值。
+2. **改令牌**：每组令牌都有取色器与 hex 文本框，两者同步。标「跟随默认链路」的可选令牌（如 `--lh-selected-color`）留空即沿用样式表的默认派生关系。
+3. **预览**：预览区用真实的 lh-ui 组件渲染，令牌通过局部 CSS 变量注入（与 `LhConfigProvider` 同机制），只作用于预览区本身，不影响站点。切换明 / 暗可查看暗色适配效果。
+4. **导出**：复制或下载得到的 SCSS 文本已包含 `:root` 令牌块与 `[data-theme='dark']` 暗色块，暗色逻辑与 share 的预设机制完全同源（深主色预设在暗色下会自动提亮主色，否则按钮与背景融为一体）。
+
+## 导出文本的结构
+
+```scss
+/* lh-ui 自定义主题 —— 由主题定制台生成（2026-01-01） */
+@use '@lh-ui/share/styles/index.scss';
+
+:root {
+  --lh-primary-color: #2B4C7C;
+  /* ... */
+}
+
+[data-theme='dark'],
+.dark {
+  --lh-primary-color-bg: color-mix(in srgb, var(--lh-primary-color) 25%, transparent);
+  /* ... */
+}
+```
+
+- `@use` 引入全量令牌基线，`:root` 块只覆盖改动过的令牌。
+- 暗色块由 `buildPresetDarkVars` 推导，与预览区看到的完全一致。
+
+## 注意事项
+
+:::warning[只能写 <style> 元素]
+应用预设变量时必须写 `<style>` 元素（特异性 0,1,0），**不要**写 `documentElement` 的内联 style——内联特异性 1,0,0,0 高于一切样式表，会压过 `var-dark.scss` 的整段暗色变量，导致暗色模式配色失真。库内的 `useLhPresetTheme` 与本站的防闪烁脚本都遵守此约定。
+:::
+
+:::tip[浅主色的对比度]
+浅主色预设（如松花绿）需要显式声明 `--lh-color-on-primary`（主色底改用墨字）与 `--lh-selected-color`（选中态文字单独加深），否则白字在浅主色上不达 AA 对比度。内置预设已处理，自定义时需自行检查。
+:::
+
+:::tip[与 Vue 版的关系]
+本页工具移植自 lh-ui-plus 的 ThemeStudio，令牌默认值、分组、暗色推导逻辑全部一致，导出的 SCSS 在两个库通用（令牌定义在共享层 `@lh-ui/share/styles/theme/common/var.scss`）。
+:::

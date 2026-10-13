@@ -1,0 +1,60 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import MessageBasic from '@site/demos/message/basic'
+
+# Message
+
+Lightweight global overlay feedback: operation success / failure, network status, etc. Mounted in a singleton container, multiple messages stack top to bottom.
+
+## Basic usage
+
+<DemoBlock title="Basic usage">
+  <MessageBasic />
+</DemoBlock>
+
+```tsx
+import { message } from '@lh-ui/react'
+import '@lh-ui/react/style/message'
+
+message.success('Saved successfully')
+```
+
+## message methods
+
+| Method | Description | Return value |
+| --- | --- | --- |
+| info / success / warning / error / danger | Show a message | `{ close }` |
+| loading | Show a loading message (does not auto-close by default) | `{ close }` |
+| destroyAll | Close all messages and unmount the container | `void` |
+
+The returned handle is used for active closing:
+
+```tsx
+const handle = message.loading('Uploading…', { duration: 0 })
+// ...
+handle.close()
+```
+
+## LhMessageOptions
+
+| Prop | Description | Type | Default |
+| --- | --- | --- | --- |
+| duration | Auto-close duration in ms; `0` never auto-closes (the loading semantic defaults to 0) | `number` | `3000` |
+| showClose | Whether to show the close button | `boolean` | `false` |
+| offset | Offset from the top of the viewport, in px | `number` | `20` |
+| closeLabel | aria-label of the close button | `string` | Locale pack (en-US: `Close message`) |
+| onClose | Callback on close | `() => void` | — |
+| sx | Shorthand layout props | `SxProps` | — |
+
+:::tip[Event mapping from the Vue version]
+`message.success('x')` corresponds to plus's `LhMessage.success('x')`; the handle's `close()` corresponds to plus's `LhMessage.close(id)`. The React side manages via the return value instead of global ids.
+:::
+
+:::tip[Accessibility]
+Success / info are `role="status"` (queued announcement), error / warning are `role="alert"` (immediate announcement) — the same paradigm as [Alert](./alert.mdx) and [Notification](./notification.mdx).
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/message'
+```

@@ -1,0 +1,14 @@
+{
+  "link.title.指南": {
+    "message": "Guide",
+    "description": "The title of the footer links column with title 指南 in the footer"
+  },
+  "link.title.更多": {
+    "message": "More",
+    "description": "The title of the footer links column with title 更多 in the footer"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 lhgb.top",
+    "description": "The footer copyright"
+  }
+}

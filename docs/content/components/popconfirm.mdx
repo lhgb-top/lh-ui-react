@@ -1,0 +1,67 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import PopconfirmBasic from '@site/demos/popconfirm/basic'
+
+# Popconfirm 气泡确认框
+
+点击元素弹出确认气泡，用于危险或重要操作前的二次确认。语义为 `role="alertdialog"`，
+打开即圈住焦点，确认 / 取消或 Esc 后关闭。
+
+## 基础用法
+
+<DemoBlock title="确认 / 取消 / 语气类型">
+  <PopconfirmBasic />
+</DemoBlock>
+
+```tsx
+import { LhButton, LhPopconfirm } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhPopconfirm title="确定执行此操作吗？" onConfirm={() => console.log('confirmed')}>
+      <LhButton>确认</LhButton>
+    </LhPopconfirm>
+  )
+}
+```
+
+## Popconfirm Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| children | 触发器节点 | `ReactNode` | — | — |
+| title | 确认的标题 / 问题 | `ReactNode` | — | — |
+| confirmText | 确认按钮文案 | `string` | — | 语言包 `popconfirm.confirm`（确定） |
+| cancelText | 取消按钮文案 | `string` | — | 语言包 `popconfirm.cancel`（取消） |
+| type | 语气类型 | `'info' \| 'warning' \| 'danger'` | — | `'warning'` |
+| placement | 展示位置 | `LhPopconfirmPlacement` | `top` / `bottom` / `left` / `right`（含 `-start` / `-end`） | `'top'` |
+| trigger | 触发方式 | `LhPopconfirmTrigger` | `'hover' \| 'click' \| 'focus' \| 'manual'` | `'click'` |
+| disabled | 禁用 | `boolean` | — | `false` |
+| showIcon | 是否显示图标 | `boolean` | — | `true` |
+| hideCancel | 是否隐藏取消按钮 | `boolean` | — | `false` |
+| visible | 受控显隐 | `boolean` | — | — |
+| defaultVisible | 非受控默认显隐 | `boolean` | — | `false` |
+| popperClass | 浮层自定义类名 | `string` | — | — |
+| themeVars | 组件级主题变量 | `Record<string, string>` | — | — |
+| sx | 快速布局属性（作用于触发器） | `SxProps` | — | — |
+
+## Popconfirm 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onConfirm | 点击确认按钮 | `() => void` | `confirm` |
+| onCancel | 点击取消按钮或按 Esc | `() => void` | `cancel` |
+| onVisibleChange | 显隐变化 | `(visible: boolean) => void` | `update:visible` |
+
+:::tip[圈焦与 Esc]
+弹出层始终按 `alertdialog` 圈住焦点；按 Esc 等同于点击取消（触发 `onCancel` 并关闭）。
+:::
+
+:::tip[确认后自动关闭]
+与 plus 一致：点击确认或取消都会先触发回调再关闭，无需外部手动收起。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/popconfirm'
+```

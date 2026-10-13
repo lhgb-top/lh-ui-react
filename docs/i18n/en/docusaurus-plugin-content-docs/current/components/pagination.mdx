@@ -1,0 +1,81 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import PaginationBasic from '@site/demos/pagination/basic'
+
+# Pagination
+
+Used to paginate content when there is too much data, with controlled / uncontrolled modes, page-size switching, and a jump input.
+
+## Basic usage
+
+<DemoBlock title="Basic usage">
+  <PaginationBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhPagination } from '@lh-ui/react'
+
+export default function Demo() {
+  const [current, setCurrent] = useState(1)
+
+  return (
+    <LhPagination
+      total={128}
+      current={current}
+      onChange={(page) => setCurrent(page)}
+    />
+  )
+}
+```
+
+## Pagination Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| total | Total number of records (required) | `number` | — | — |
+| current | Current page (controlled, 1-based) | `number` | — | — |
+| defaultCurrent | Default current page (uncontrolled) | `number` | — | `1` |
+| pageSize | Page size (controlled) | `number` | — | — |
+| defaultPageSize | Default page size (uncontrolled) | `number` | — | `10` |
+| pageSizes | Page size options | `number[]` | — | `[10, 20, 30, 40]` |
+| siblingCount | Number of page numbers shown on each side of the current page | `number` | — | `1` |
+| showTotal | Whether to show the total count | `boolean` | — | `false` |
+| showSizeChanger | Whether to show the page-size switcher | `boolean` | — | `false` |
+| showJumper | Whether to show the jump input | `boolean` | — | `false` |
+| simple | Compact mode | `boolean` | — | `false` |
+| disabled | Whether to disable | `boolean` | — | `false` |
+| sx | Shorthand layout props | `SxProps` | — | — |
+
+## Pagination events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onChange | Emitted when the page changes (page switch, jump, or clamping caused by a page-size change all trigger it) | `(current: number, pageSize: number) => void` | `@change` |
+| onSizeChange | Emitted when the page size changes | `(pageSize: number) => void` | `@size-change` |
+
+:::tip[Controlled / uncontrolled]
+Passing `current` makes the component controlled (no internal state, driven externally); passing `defaultCurrent` uses the internal uncontrolled state. The same applies to `pageSize`. `onChange` fires in both modes.
+:::
+
+:::tip[Page clamping]
+When a page-size change shrinks the total page count and the current page falls out of range, the component automatically clamps it to the last page in an effect and emits `onChange` — no fallback needed on the business side.
+:::
+
+## Keyboard interaction
+
+Jump input: `Enter` submits the jump, and blur submits as well; invalid values (out of range or non-numeric) are clamped to the valid range.
+
+## Accessibility
+
+The root element is `<nav aria-label>`; the current page emits `aria-current="page"`, and each page button carries an `aria-label` (locale pack `pagination.page` template, e.g. "Page 3").
+
+## ref
+
+`forwardRef<HTMLElement>` — the `<nav>` root element.
+
+## Styles
+
+```ts
+import '@lh-ui/react/theme.css'
+import '@lh-ui/react/style/pagination'
+```

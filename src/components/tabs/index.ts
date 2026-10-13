@@ -1,0 +1,5 @@
+export { LhTabs } from './Tabs'
+export { LhTabPane } from './TabPane'
+export { useLhTabs } from './use-tabs'
+export { LhTabsContext } from './context'
+export type { LhTabsProps, LhTabPaneProps, LhTabsContextValue, LhTabsType, LhTabsPosition } from './types'

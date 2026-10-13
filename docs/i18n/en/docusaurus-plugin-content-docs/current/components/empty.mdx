@@ -1,0 +1,48 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import EmptyBasic from '@site/demos/empty/basic'
+
+# Empty
+
+Placeholder prompt for empty states.
+
+## Basic usage
+
+<DemoBlock title="Basic usage">
+  <EmptyBasic />
+</DemoBlock>
+
+```tsx
+import { LhEmpty, LhButton } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhEmpty
+      description="Custom description text"
+      actions={<LhButton type="primary">Reload</LhButton>}
+    />
+  )
+}
+```
+
+## Empty Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| description | Description text (falls back to locale pack `empty.description` when omitted) | `ReactNode` | — | `'No data'` |
+| image | Custom image URL | `string` | — | — |
+| actions | Action area | `ReactNode` | — | — |
+| sx | Shorthand layout props | `SxProps` | — | — |
+
+:::tip[Custom images]
+Passing an `image` prop or a `children` node both go through the custom image container (the `--custom` modifier constrains it to `max-width: 160px / max-height: 120px`); when neither is passed, the built-in inline ink illustration is rendered (colored by theme variables, adapting to light / dark modes automatically).
+:::
+
+:::tip[Accessibility]
+The root element is `role="status"` (gentle announcement); the default illustration is `aria-hidden` and does not interfere with screen readers.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/empty'
+```

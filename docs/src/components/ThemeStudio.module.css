@@ -1,0 +1,155 @@
+.studio {
+  border: 1px solid var(--ifm-color-emphasis-300, #e2e8f0);
+  border-radius: 12px;
+  padding: 16px;
+  background-color: var(--ifm-color-emphasis-100, #fafafa);
+}
+
+.toolbar,
+.previewHead,
+.exportHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.select,
+.hex,
+.exportCode {
+  border: 1px solid var(--ifm-color-emphasis-300, #d0d7de);
+  border-radius: 8px;
+  padding: 6px 10px;
+  background-color: var(--ifm-background-color, #fff);
+  color: var(--ifm-color-emphasis-800, #333);
+  font-size: 13px;
+}
+
+.btn {
+  border: 1px solid var(--ifm-color-emphasis-300, #d0d7de);
+  border-radius: 8px;
+  padding: 6px 14px;
+  background-color: var(--ifm-background-color, #fff);
+  color: var(--ifm-color-emphasis-800, #333);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn:hover {
+  border-color: var(--lh-primary-color);
+  color: var(--lh-primary-color);
+}
+
+.btnPrimary {
+  background-color: var(--lh-primary-color);
+  border-color: var(--lh-primary-color);
+  color: var(--lh-color-on-primary, #fff);
+}
+
+.btnPrimary:hover {
+  background-color: var(--lh-primary-color-hover);
+  border-color: var(--lh-primary-color-hover);
+  color: var(--lh-color-on-primary, #fff);
+}
+
+.btnToggleDark {
+  background-color: #1e1a16;
+  border-color: #1e1a16;
+  color: #e8e0d8;
+}
+
+.panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.groupTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-600, #666);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.token {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.color {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  padding: 0;
+  border: 1px solid var(--ifm-color-emphasis-300, #d0d7de);
+  border-radius: 6px;
+  background: none;
+  cursor: pointer;
+}
+
+.hex {
+  width: 92px;
+  flex: none;
+  font-family: var(--ifm-font-family-monospace, monospace);
+}
+
+.tokenName {
+  font-size: 11px;
+  font-family: var(--ifm-font-family-monospace, monospace);
+  color: var(--ifm-color-emphasis-500, #999);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  border: 1px dashed var(--lh-border-color-base, #d8d3cc);
+  border-radius: 10px;
+  padding: 16px;
+  background-color: var(--lh-bg-color, #faf6f0);
+  color: var(--lh-text-primary, #2c2c2c);
+}
+
+.sampleText {
+  margin: 0;
+  width: 100%;
+  color: var(--lh-text-regular, #5a5a5a);
+  font-size: 13px;
+}
+
+.secondary {
+  color: var(--lh-text-secondary, #8a8a8a);
+}
+
+.hint {
+  margin: 8px 0 20px;
+  font-size: 12px;
+  color: var(--ifm-color-emphasis-600, #666);
+}
+
+.exportCode {
+  width: 100%;
+  margin-top: 10px;
+  font-family: var(--ifm-font-family-monospace, monospace);
+  font-size: 12px;
+  line-height: 1.6;
+  resize: vertical;
+}

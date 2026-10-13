@@ -1,0 +1,75 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import TagBasic from '@site/demos/tag/basic'
+
+# Tag 标签
+
+用于标记和选择的标签。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <TagBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhTag } from '@lh-ui/react'
+
+export default function Demo() {
+  const [tags, setTags] = useState(['水墨', '国风', '组件库'])
+
+  const handleClose = (tag: string) => {
+    setTags((prev) => prev.filter((item) => item !== tag))
+  }
+
+  return (
+    <>
+      <LhTag>默认标签</LhTag>
+      <LhTag type="primary">主要标签</LhTag>
+      <LhTag type="success">成功标签</LhTag>
+      <LhTag type="warning" round>圆角标签</LhTag>
+      <LhTag type="danger" hit>描边标签</LhTag>
+      {tags.map((tag) => (
+        <LhTag key={tag} closable onClose={() => handleClose(tag)}>
+          {tag}
+        </LhTag>
+      ))}
+    </>
+  )
+}
+```
+
+## Tag Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| type | 类型 | `'text' \| 'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | — | `'text'` |
+| size | 尺寸 | `'large' \| 'middle' \| 'small'` | — | 跟随 ConfigProvider |
+| closable | 可关闭 | `boolean` | — | `false` |
+| disabled | 禁用（不响应点击与关闭） | `boolean` | — | `false` |
+| round | 圆角 | `boolean` | — | `false` |
+| hit | 描边形态 | `boolean` | — | `false` |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+## Tag 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onClick | 点击时触发（传入 onClick 且未 disabled 时，组件升级为 `role="button"`） | `(event: MouseEvent) => void` | `@click` |
+| onClose | 关闭按钮点击 | `(event: MouseEvent) => void` | `@close` |
+
+:::tip[键盘交互]
+可点击的 Tag 渲染为 `role="button"` 并响应 Enter / Space，详见 [无障碍](../guide/accessibility.md)。
+:::
+
+:::tip[关闭即卸载（React 增强）]
+点击关闭按钮后 Tag **立即从 DOM 卸载**，随后才抛 `onClose`。lh-ui-plus 的 `@close`
+只抛事件、由外部 `v-if` 移除节点；React 无指令，纯展示场景若还要外部 state 控制卸载
+用法太重，故本库内置关闭态。若需完全自行控制显隐，用条件渲染包裹即可。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/tag'
+```

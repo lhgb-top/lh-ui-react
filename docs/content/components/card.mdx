@@ -1,0 +1,60 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import CardBasic from '@site/demos/card/basic'
+
+# Card 卡片
+
+通用卡片容器。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <CardBasic />
+</DemoBlock>
+
+```tsx
+import { LhCard } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhCard title="水墨山水" style={{ width: 300 }}>
+      <p>远山如黛，近水含烟。</p>
+    </LhCard>
+  )
+}
+```
+
+## Card Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| title | 标题（无 `header` 时渲染默认头部） | `string` | — | — |
+| shadow | 阴影显示时机 | `'always' \| 'hover' \| 'never'` | — | `'always'` |
+| clickable | 整卡可点击（承担 button 键盘语义） | `boolean` | — | `false` |
+| loading | 加载中（正文区骨架占位，整卡禁止交互） | `boolean` | — | `false` |
+| cover | 封面区 | `ReactNode` | — | — |
+| header | 头部内容（覆盖默认头部） | `ReactNode` | — | — |
+| extra | 头部右侧附加区 | `ReactNode` | — | — |
+| footer | 底部区域 | `ReactNode` | — | — |
+| themeVars | 组件级主题变量，覆盖 ConfigProvider 配置 | `Record<string, string>` | — | — |
+| bgPattern | 组件级背景花纹 | `string` | — | — |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+## Card 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onClick | 点击时触发（仅 `clickable` 且非 `loading`） | `(event: MouseEvent) => void` | `@click` |
+
+:::tip[键盘交互]
+`clickable` 且非 `loading` 时，卡片渲染为 `role="button"` 并响应 Enter / Space（Space 会 `preventDefault` 防滚动），详见 [无障碍](../guide/accessibility.md)。
+:::
+
+:::tip[Vue 插槽对照]
+plus 的 `cover` / `header` / `extra` / `footer` 插槽在 React 侧映射为同名 `ReactNode` props，默认插槽为 `children`。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/card'
+```

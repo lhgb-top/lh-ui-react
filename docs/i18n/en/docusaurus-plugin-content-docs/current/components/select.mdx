@@ -1,0 +1,84 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import SelectBasic from '@site/demos/select/basic'
+
+# Select
+
+A dropdown selector with controlled / uncontrolled modes, keyboard navigation, and clearing.
+
+## Basic usage
+
+<DemoBlock title="Controlled selection">
+  <SelectBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhSelect } from '@lh-ui/react'
+import type { LhSelectOption } from '@lh-ui/react'
+
+const options: LhSelectOption[] = [
+  { label: 'Ink', value: 'ink' },
+  { label: 'Danqing', value: 'danqing' },
+  { label: 'Blank', value: 'blank' },
+  { label: 'Gongbi', value: 'gongbi' },
+]
+
+export default function Demo() {
+  const [value, setValue] = useState<string>('')
+
+  return (
+    <LhSelect
+      value={value}
+      options={options}
+      placeholder="Select a style"
+      onChange={(val) => setValue(val as string)}
+    />
+  )
+}
+```
+
+## Select Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| value | Controlled value | `unknown` | — | — |
+| defaultValue | Uncontrolled default value | `unknown` | — | — |
+| options | Option list | `LhSelectOption[]` | — | `[]` |
+| placeholder | Placeholder | `string` | — | Locale pack fallback |
+| disabled | Whether to disable | `boolean` | — | `false` |
+| clearable | Whether to be clearable | `boolean` | — | `false` |
+| size | Size | `'large' \| 'middle' \| 'small'` | — | Follows ConfigProvider |
+| name | Native name attribute | `string` | — | — |
+| ariaLabel | Accessibility label | `string` | — | — |
+| placement | Dropdown placement | `LhPlacement` | — | `'bottom-start'` |
+| themeVars | Component-level theme variables | `Record<string, string>` | — | — |
+| sx | Shorthand layout props | `SxProps` | — | — |
+
+### LhSelectOption
+
+| Prop | Description | Type |
+| --- | --- | --- |
+| label | Option display text | `string` |
+| value | Option value | `unknown` |
+| disabled | Disable this option | `boolean` |
+
+## Select events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onChange | Emitted on selection (two arguments: the value and the option object) | `(value: unknown, option: LhSelectOption \| undefined) => void` | `@change` |
+| onClear | Emitted when cleared | `() => void` | `@clear` |
+
+## Keyboard interaction
+
+When expanded: `ArrowUp` / `ArrowDown` highlight options (skipping disabled ones), `Enter` selects, and `Escape` collapses. The trigger is `role="combobox"`, the panel is `role="listbox"`, options are `role="option"`, and `aria-activedescendant` tracks the highlight.
+
+## ref
+
+`forwardRef<HTMLDivElement>` — the trigger root element. `LhSelectInstance` exposes `open()` / `close()` / `focus()`.
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/select'
+```

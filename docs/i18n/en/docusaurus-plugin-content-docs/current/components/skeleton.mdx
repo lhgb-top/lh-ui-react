@@ -1,0 +1,72 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import SkeletonBasic from '@site/demos/skeleton/basic'
+
+# Skeleton
+
+A placeholder to show while content is loading.
+
+## Basic usage
+
+<DemoBlock title="Basic usage">
+  <SkeletonBasic />
+</DemoBlock>
+
+```tsx
+import { LhSkeleton } from '@lh-ui/react'
+
+export default function Demo() {
+  return <LhSkeleton avatar rows={2} sx={{ w: 300 }} />
+}
+```
+
+## Skeleton Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| loading | Whether to show the skeleton (renders children when `false`) | `boolean` | — | `true` |
+| rows | Number of text rows | `number` | — | `3` |
+| avatar | Whether to include a circular avatar placeholder | `boolean` | — | `false` |
+| animated | Whether to enable the animation | `boolean` | — | `true` |
+| sx | Shorthand layout props | `SxProps` | — | — |
+
+## SkeletonItem Props
+
+`LhSkeletonItem` is an independently exported placeholder block that can be used standalone to compose arbitrary skeleton structures.
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| variant | Placeholder shape | `'text' \| 'rect' \| 'circle'` | — | `'text'` |
+| animated | Whether to enable the animation | `boolean` | — | `true` |
+| className | Appended class name | `string` | — | — |
+| style | Appended inline style | `CSSProperties` | — | — |
+| sx | Shorthand layout props | `SxProps` | — | — |
+
+```tsx
+import { LhSkeletonItem } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <div style={{ display: 'flex', gap: 16, width: 300 }}>
+      <LhSkeletonItem variant="circle" />
+      <div style={{ flex: 1 }}>
+        <LhSkeletonItem style={{ marginBottom: 8 }} />
+        <LhSkeletonItem style={{ width: '60%' }} />
+      </div>
+    </div>
+  )
+}
+```
+
+:::tip[Row width algorithm]
+When `rows > 1`, the last row shrinks to `60%` to mimic real paragraph layout; the root element must have a determined width (row widths are percentages).
+:::
+
+:::tip[Accessibility]
+The skeleton container emits `aria-busy="true"` + `aria-live="polite"`; all placeholder blocks are `aria-hidden`, and once data is ready the screen reader announces the real content again. Under `prefers-reduced-motion`, the animation automatically degrades to a static placeholder.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/skeleton'
+```

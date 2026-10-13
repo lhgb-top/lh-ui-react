@@ -1,0 +1,69 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import PopoverBasic from '@site/demos/popover/basic'
+
+# Popover
+
+Similar to Tooltip, but can host a title and richer content (HTML structures, lists, etc.), triggered by click or hover.
+
+## Basic usage
+
+<DemoBlock title="Placements, triggers, and the arrow">
+  <PopoverBasic />
+</DemoBlock>
+
+```tsx
+import { LhButton, LhPopover } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhPopover title="Title" content="This is the popover content." placement="top">
+      <LhButton>Top</LhButton>
+    </LhPopover>
+  )
+}
+```
+
+## Popover Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| children | Trigger node | `ReactNode` | — | — |
+| title | Title (rendered in the `__title` area) | `ReactNode` | — | — |
+| content | Content (rendered in the `__content` area) | `ReactNode` | — | — |
+| placement | Placement | `LhPopoverPlacement` | `top` / `bottom` / `left` / `right` (with `-start` / `-end`) | `'top'` |
+| trigger | Trigger method | `LhPopoverTrigger` | `'hover' \| 'click' \| 'focus' \| 'manual'` | `'click'` |
+| disabled | Disable the popover | `boolean` | — | `false` |
+| arrow | Whether to show the arrow | `boolean` | — | `true` |
+| width | Overlay width | `string \| number` | — | — |
+| visible | Controlled visibility | `boolean` | — | — |
+| defaultVisible | Uncontrolled default visibility | `boolean` | — | `false` |
+| showAfter | Show delay (ms; 200 by default to avoid accidental triggers) | `number` | — | `200` |
+| hideAfter | Hide delay (ms; 100 by default to let the pointer move into the overlay) | `number` | — | `100` |
+| popperClass | Custom overlay class name | `string` | — | — |
+| themeVars | Component-level theme variables | `Record<string, string>` | — | — |
+| bgPattern | Component-level background pattern | `string` | — | — |
+| sx | Shorthand layout props (applied to the trigger) | `SxProps` | — | — |
+
+## Popover events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onVisibleChange | Visibility change (fires in both controlled and uncontrolled modes) | `(visible: boolean) => void` | `update:visible` |
+
+## ref
+
+`forwardRef<HTMLDivElement>` — the trigger root element. `LhPopoverInstance` exposes `show()` / `hide()` / `toggle()` / `isVisible`.
+
+:::tip[Focus trap]
+With `trigger="click"`, the overlay traps focus by dialog semantics (Tab cycles inside) and returns focus on close; `hover` / `focus` triggers do not steal focus, consistent with plus's `isModal` behavior.
+:::
+
+:::tip[Accessibility]
+The overlay is `role="dialog"`; when a title exists it is associated via `aria-labelledby`, and the trigger is associated with the overlay via `aria-describedby`.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/popover'
+```

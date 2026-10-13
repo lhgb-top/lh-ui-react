@@ -1,0 +1,82 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import CheckboxBasic from '@site/demos/checkbox/basic'
+
+# Checkbox
+
+Selects multiple options from a set; can be used standalone or composed with `LhCheckboxGroup`.
+
+## Basic usage
+
+<DemoBlock title="Standalone and grouped">
+  <CheckboxBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhCheckbox, LhCheckboxGroup } from '@lh-ui/react'
+
+export default function Demo() {
+  const [checked, setChecked] = useState(false)
+  const [group, setGroup] = useState<string[]>(['ink'])
+
+  return (
+    <>
+      <LhCheckbox checked={checked} onChange={(val) => setChecked(val)}>
+        Standalone checkbox
+      </LhCheckbox>
+
+      <LhCheckboxGroup value={group} onChange={(val) => setGroup(val as string[])}>
+        <LhCheckbox value="ink">Ink</LhCheckbox>
+        <LhCheckbox value="danqing">Danqing</LhCheckbox>
+        <LhCheckbox value="blank">Blank</LhCheckbox>
+      </LhCheckboxGroup>
+    </>
+  )
+}
+```
+
+## Checkbox Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| value | Option value (effective inside a Group) | `unknown` | — | — |
+| checked | Controlled checked state (when used standalone) | `boolean` | — | — |
+| defaultChecked | Uncontrolled default checked | `boolean` | — | `false` |
+| label | Display text | `string` | — | — |
+| disabled | Whether to disable | `boolean` | — | `false` |
+| indeterminate | Indeterminate state (visual only; produces no value) | `boolean` | — | `false` |
+| size | Size | `'large' \| 'middle' \| 'small'` | — | Follows ConfigProvider |
+| name | Native name attribute (passed through by the Group) | `string` | — | — |
+| sx | Shorthand layout props | `SxProps` | — | — |
+
+## Checkbox events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onChange | Checked state change (two arguments) | `(checked: boolean, event: ChangeEvent) => void` | `@change` |
+
+## CheckboxGroup Props
+
+| Prop | Description | Type | Default |
+| --- | --- | --- | --- |
+| value | Controlled selected values array | `unknown[]` | — |
+| defaultValue | Uncontrolled default value | `unknown[]` | `[]` |
+| disabled | Disable all children | `boolean` | `false` |
+| size | Child size | `'large' \| 'middle' \| 'small'` | Follows ConfigProvider |
+| name | Native name attribute passed through to children | `string` | — |
+
+## CheckboxGroup events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onChange | Selected values array change | `(value: unknown[]) => void` | `@change` |
+
+:::tip[Indeterminate state]
+`indeterminate` is commonly used for the intermediate state of a "select all": visually a horizontal bar, but it does not affect `checked`. The component syncs it to the native `input.indeterminate` inside `useEffect`.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/checkbox'
+```

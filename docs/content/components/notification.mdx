@@ -1,0 +1,66 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import NotificationBasic from '@site/demos/notification/basic'
+
+# Notification 通知
+
+比 Message 更重的反馈：带标题 / 正文 / 类型图标，从四角弹出，适合内容较长的系统通知。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <NotificationBasic />
+</DemoBlock>
+
+```tsx
+import { notification } from '@lh-ui/react'
+import '@lh-ui/react/style/notification'
+
+notification.success({ title: '保存成功', content: '作品已发布到画廊。' })
+
+// 字符串简写：只渲染标题行
+notification.info('系统通知')
+```
+
+## notification 方法
+
+| 方法 | 说明 | 返回值 |
+| --- | --- | --- |
+| info / success / warning / error / danger | 显示通知 | `{ close }` |
+| close | 关闭指定通知（先播退场动画） | `void` |
+| closeAll | 关闭全部通知并卸载容器 | `void` |
+
+```tsx
+const handle = notification.warning({ title: '存储空间不足' })
+handle.close()
+```
+
+## LhNotificationOptions
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| title | 标题（未传时取 content） | `string` | — |
+| content | 正文（与 title 同值时只渲染标题行） | `string` | — |
+| duration | 自动关闭毫秒数，`0` 不自动关闭 | `number` | `4500` |
+| position | 弹出位置 | `'top-right' \| 'top-left' \| 'bottom-right' \| 'bottom-left'` | `'top-right'` |
+| showClose | 是否显示关闭按钮 | `boolean` | `true` |
+| closeLabel | 关闭按钮的 aria-label | `string` | 语言包（zh-CN：`关闭通知`） |
+| onClick | 点击回调（传入后卡片可点击） | `() => void` | — |
+| onClose | 关闭时回调 | `() => void` | — |
+| sx | 快速布局属性 | `SxProps` | — |
+
+:::tip[退场动画]
+React 无 transition-group，条目自管退场：关闭时先播 `lh-notification-slide-leave-*`
+（280ms）再移除记录。**FLIP 让位动画未实现**：队列增删时兄弟卡片瞬时跳位，
+堆叠间距由容器的 flex gap 承接。
+:::
+
+:::tip[无障碍]
+`warning` / `danger` 为 `role="alert"`（立即播报），`info` / `success` 为
+`role="status"`（排队播报）；容器为 `role="region"` + `aria-live="polite"`。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/notification'
+```

@@ -1,0 +1,81 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import DrawerBasic from '@site/demos/drawer/basic'
+
+# Drawer
+
+A drawer panel that slides in from a screen edge, commonly used for details or forms that need more display space. Differences from Dialog: it hugs an edge, slides by direction, and the panel size applies to a single side (width or height).
+
+## Basic usage
+
+<DemoBlock title="Four directions and custom sizes">
+  <DrawerBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhButton, LhDrawer } from '@lh-ui/react'
+
+export default function Demo() {
+  const [open, setOpen] = useState(false)
+  return (
+    <>
+      <LhButton onClick={() => setOpen(true)}>Open drawer</LhButton>
+      <LhDrawer title="Drawer title" open={open} onClose={() => setOpen(false)}>
+        Drawer content
+      </LhDrawer>
+    </>
+  )
+}
+```
+
+## Drawer Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| children | Body content | `ReactNode` | — | — |
+| open | Whether to show (controlled) | `boolean` | — | `false` |
+| title | Title | `ReactNode` | — | — |
+| direction | Slide-in direction | `'right' \| 'left' \| 'top' \| 'bottom'` | — | `'right'` |
+| size | Panel size (number → px; string supports percentages) | `string \| number` | — | `'30%'` |
+| showClose | Whether to show the close button | `boolean` | — | `true` |
+| maskClosable | Whether clicking the modal closes the drawer | `boolean` | — | `false` |
+| closeOnEsc | Whether Esc closes the drawer | `boolean` | — | `true` |
+| lockScroll | Whether to lock body scroll (also traps focus when locked) | `boolean` | — | `true` |
+| beforeClose | Intercept before closing; closing only proceeds when `done` is called | `(done: () => void) => void` | — | — |
+| zIndex | z-index (falls back to the global increasing system when omitted) | `number` | — | — |
+| header | Header content (overrides the default title bar) | `ReactNode` | — | — |
+| footer | Footer content (button area) | `ReactNode` | — | — |
+| themeVars | Component-level theme variables | `Record<string, string>` | — | — |
+| sx | Shorthand layout props (applied to the panel) | `SxProps` | — | — |
+
+## Drawer events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onClose | Close request (modal / Esc / close button; emitted after `beforeClose` interception) | `() => void` | `update:modelValue` / `close` |
+| onOpen | Emitted when opening (after DOM mount, before the enter animation) | `() => void` | `open` |
+| onOpened | Open animation ended | `() => void` | `opened` |
+| onCloseStart | The close request was accepted and the leave animation has started | `() => void` | — |
+| onClosed | After the close animation ends and the DOM is unmounted | `() => void` | `closed` |
+
+## ref
+
+`forwardRef<LhDrawerInstance>`. `LhDrawerInstance` exposes `close()` (goes through `beforeClose` interception) and `isOpen`.
+
+:::tip[Modal is not clickable by default]
+`maskClosable` defaults to `false` (core's `canDrawerClose` rejects modal clicks by default) to avoid accidental triggers; plus's `closeOnClickModal` defaults to `true`, so declare it explicitly when migrating.
+:::
+
+:::tip[Focus trap]
+Focus is trapped only when `lockScroll` is on (`shouldDrawerTrapFocus`): a drawer is often a lightweight panel, and when scroll is not locked the Tab order of the form behind it is preserved. Focus is returned on close.
+:::
+
+:::tip[Size direction]
+A numeric `size` is normalized to px; for the left / right directions it applies to the panel `width`, and for the top / bottom directions it applies to the `height`.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/drawer'
+```

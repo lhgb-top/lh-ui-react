@@ -1,0 +1,26 @@
+# 依赖
+node_modules
+.pnpm-store
+
+# 构建产物（永不手改）
+es
+lib
+dist
+theme
+coverage
+
+# docs 产物（Docusaurus）
+docs/.docusaurus
+docs/build
+
+# 编辑器与系统
+.DS_Store
+*.local
+*.log
+
+# ZCode 工具目录（plan 文件等，非仓库内容）
+.zcode/
+
+# 回归测试产物（浏览器走查产出，按需保留）
+regression-report/
+回归测试报告.md

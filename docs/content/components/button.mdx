@@ -1,0 +1,88 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import ButtonBasic from '@site/demos/button/basic'
+import ButtonSize from '@site/demos/button/size'
+
+# Button 按钮
+
+常用的操作按钮，支持多种类型、尺寸、状态及国风主题色。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <ButtonBasic />
+</DemoBlock>
+
+```tsx
+import { LhButton } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <>
+      <LhButton>默认按钮</LhButton>
+      <LhButton type="primary">主要按钮</LhButton>
+      <LhButton type="success">成功按钮</LhButton>
+      <LhButton type="warning">警告按钮</LhButton>
+      <LhButton type="danger">危险按钮</LhButton>
+      <LhButton type="info">信息按钮</LhButton>
+    </>
+  )
+}
+```
+
+## 尺寸与状态
+
+<DemoBlock title="尺寸与状态">
+  <ButtonSize />
+</DemoBlock>
+
+```tsx
+import { LhButton } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <>
+      <LhButton size="large">大型按钮</LhButton>
+      <LhButton>默认按钮</LhButton>
+      <LhButton size="small">小型按钮</LhButton>
+
+      <LhButton type="primary" loading>加载中</LhButton>
+      <LhButton type="primary" disabled>禁用态</LhButton>
+      <LhButton type="primary" icon="search">图标按钮</LhButton>
+      <LhButton type="primary" round>圆角按钮</LhButton>
+      <LhButton type="primary" plain>朴素按钮</LhButton>
+    </>
+  )
+}
+```
+
+## Button Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| type | 按钮类型 | `'text' \| 'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | — | `'text'` |
+| size | 尺寸 | `'large' \| 'middle' \| 'small'` | — | 跟随 ConfigProvider |
+| loading | 加载中状态 | `boolean` | — | `false` |
+| disabled | 禁用状态 | `boolean` | — | `false` |
+| plain | 朴素形态 | `boolean` | — | `false` |
+| block | 通栏（宽度 100%） | `boolean` | — | `false` |
+| round | 圆角 | `boolean` | — | `false` |
+| circle | 圆形 | `boolean` | — | `false` |
+| icon | 图标名 | `LhIconName` | — | — |
+| nativeType | 原生 type 属性 | `'button' \| 'submit' \| 'reset'` | — | `'button'` |
+| href | 传入时渲染为 `<a>` | `string` | — | — |
+| target | href 模式的 target | `string` | — | — |
+| themeVars | 组件级主题变量 | `Record<string, string>` | — | — |
+| bgPattern | 组件级背景花纹 | `string` | — | — |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+## Button 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onClick | 点击时触发（disabled / loading 时不触发） | `(event: MouseEvent) => void` | `@click` |
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/button'
+```

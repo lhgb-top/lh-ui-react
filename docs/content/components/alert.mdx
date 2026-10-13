@@ -1,0 +1,56 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import AlertBasic from '@site/demos/alert/basic'
+
+# Alert 警告提示
+
+用于页面中展示重要的提示信息。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <AlertBasic />
+</DemoBlock>
+
+```tsx
+import { LhAlert } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhAlert type="success" title="成功提示" showIcon closable>
+      这是一条成功提示。
+    </LhAlert>
+  )
+}
+```
+
+## Alert Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| type | 类型 | `'info' \| 'success' \| 'warning' \| 'danger'` | — | `'info'` |
+| title | 标题（不传时不渲染标题行） | `ReactNode` | — | — |
+| closable | 是否可关闭 | `boolean` | — | `false` |
+| showIcon | 是否显示类型图标 | `boolean` | — | `false` |
+| plain | 是否朴素样式（浅色描边） | `boolean` | — | `false` |
+| closeLabel | 关闭按钮的无障碍名称（未传取语言包 `alert.close`） | `string` | — | `'关闭警告'` |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+## Alert 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onClose | 关闭按钮点击时触发 | `(event: MouseEvent) => void` | `@close` |
+
+:::tip[关闭为内部非受控]
+点击关闭按钮后 Alert 直接卸载（无过渡动画），并触发 `onClose`。若要「关掉还能再打开」，用外部状态做条件渲染包裹，不要依赖组件内部状态。
+:::
+
+:::tip[无障碍 live region]
+`type` 为 `warning` / `danger` 时输出 `role="alert"`（立即播报）；`info` / `success` 输出 `role="status"`（排队播报），避免打断用户当前操作。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/alert'
+```

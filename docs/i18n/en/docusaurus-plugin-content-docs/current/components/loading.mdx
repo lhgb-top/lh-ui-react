@@ -1,0 +1,66 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import LoadingBasic from '@site/demos/loading/basic'
+
+# Loading
+
+A fullscreen or local loading overlay: freezes user interaction and gives a waiting prompt for scenarios like submitting or loading a list.
+
+## Basic usage
+
+<DemoBlock title="Basic usage">
+  <LoadingBasic />
+</DemoBlock>
+
+```tsx
+import { loading } from '@lh-ui/react'
+import '@lh-ui/react/style/loading'
+
+const handle = loading.show({ text: 'Submitting…' })
+setTimeout(() => handle.close(), 1500)
+
+// Mount to a specific area instead of fullscreen
+loading.show({ target: cardRef.current })
+```
+
+## loading methods
+
+| Method | Description | Return value |
+| --- | --- | --- |
+| show | Show the overlay | `{ close }` |
+| closeAll | Close all active instances (skipping the leave animation) | `void` |
+
+```tsx
+const handle = loading.show({ target: '#card', lock: true })
+handle.close()
+```
+
+## LhLoadingOptions
+
+| Prop | Description | Type | Default |
+| --- | --- | --- | --- |
+| target | Mount target: selector string / element; fullscreen when omitted | `string \| HTMLElement` | Fullscreen (body) |
+| text | Prompt text | `string` | Locale pack (en-US: `Loading…`) |
+| background | Overlay background color (a CSS background value) | `string` | `rgba(255,255,255,72%)` |
+| lock | Whether to lock scrolling (fullscreen locks body; a given target locks itself) | `boolean` | `true` |
+
+:::tip[Differences from message / notification]
+loading mounts to **an arbitrary target element** (fullscreen or local) and cannot share a singleton container, so it uses per-instance `createRoot`: each instance holds its own root and restoration handle. Calling `show` repeatedly on the same target unmounts the previous instance first.
+:::
+
+:::tip[Interaction freezing of local overlays]
+Besides locking the target's scroll, a non-fullscreen overlay sets `inert` on the target to freeze its content interaction; on close, `overflow` / `inert` / `position` are restored automatically (a target with `static` positioning is temporarily given `relative`).
+:::
+
+:::tip[Accessibility]
+The overlay is `role="status"` + `aria-busy="true"`, and the text is announced as an `aria-label`; the spinner is a decorative graphic (`aria-hidden`).
+:::
+
+:::warning[Import styles on demand]
+The overlay reuses the button's spinner painting (`.lh-button__spinner`); the page must also import `@lh-ui/react/style/button` for the spin animation.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/loading'
+```

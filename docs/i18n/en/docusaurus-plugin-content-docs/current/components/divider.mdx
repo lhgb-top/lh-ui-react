@@ -1,0 +1,52 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import DividerBasic from '@site/demos/divider/basic'
+
+# Divider
+
+A divider that separates content.
+
+## Basic usage
+
+<DemoBlock title="Basic usage">
+  <DividerBasic />
+</DemoBlock>
+
+```tsx
+import { LhDivider } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <>
+      <span>Spring water greener than the sky, a painted boat asleep in the rain.</span>
+      <LhDivider />
+      <span>By the hearth, fair as the moon, white wrists like congealed frost and snow.</span>
+      <LhDivider dashed />
+      <LhDivider labelPosition="left">Left-aligned group</LhDivider>
+    </>
+  )
+}
+```
+
+## Divider Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| direction | Direction | `'horizontal' \| 'vertical'` | — | `'horizontal'` |
+| dashed | Dashed line | `boolean` | — | `false` |
+| labelPosition | Label position (effective horizontally; always centered vertically) | `'left' \| 'center' \| 'right'` | — | `'center'` |
+| borderStyle | Border style (takes precedence over `dashed` when set explicitly) | `string` | `'solid' \| 'dashed' \| 'dotted'` … | — |
+| sx | Layout shorthand | `SxProps` | — | — |
+
+:::tip[Accessibility]
+A divider with a label renders as `role="separator"` (real grouping semantics); a purely decorative one renders as `role="presentation"` and is removed from the accessibility tree. `aria-orientation="vertical"` is output only when the divider has a label and is vertical.
+:::
+
+:::warning[Known behavior]
+`borderStyle="dotted"` outputs the `lh-divider--dotted` modifier, but the style layer currently only implements `--dashed`, so it falls back to a solid line — consistent with lh-ui-plus.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/divider'
+```

@@ -1,0 +1,79 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import ConfigProviderBasic from '@site/demos/config-provider/basic'
+
+# ConfigProvider
+
+Provides unified global configuration for components (size, locale, theme variables, background-pattern allowlist).
+
+## Basic usage
+
+<DemoBlock title="Global size and theme variables">
+  <ConfigProviderBasic />
+</DemoBlock>
+
+```tsx
+import { LhConfigProvider, LhButton } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <>
+      <LhConfigProvider size="large" themeVars={{ 'primary-color': '#722ed1' }}>
+        <LhButton type="primary">Global large + custom primary</LhButton>
+      </LhConfigProvider>
+
+      <LhConfigProvider size="small">
+        <LhButton type="primary">Global small</LhButton>
+      </LhConfigProvider>
+    </>
+  )
+}
+```
+
+## Props
+
+| Prop | Description | Type | Default |
+| --- | --- | --- | --- |
+| size | Global size | `'large' \| 'middle' \| 'small'` | — |
+| locale | Global locale | `LhComponentLanguage` | `'zh-CN'` |
+| themeVars | Global theme variables (keys without the `--lh-` prefix) | `Record<string, string>` | — |
+| patternComponents | Allowlist of components that apply the background pattern | `LhThemeableComponent[]` | — |
+| componentTheme | Per-component theme variables | `Partial<Record<LhThemeableComponent, Record<string, string>>>` | — |
+
+## Theme variable precedence
+
+**Component's own props > `componentTheme[componentName]` > global `themeVars`**
+
+## Available themeVars keys
+
+| Key | Description |
+| --- | --- |
+| `primary-color` | Primary color |
+| `success-color` / `warning-color` / `danger-color` / `info-color` | Semantic colors |
+| `gold-color` / `vermilion-color` / `jade-color` | Chinese-style colors |
+| `bg-color` / `text-color` / `border-color` | Neutral colors |
+| `bg-pattern` | Pattern background URL (e.g. `var(--lh-pattern-willow)`) |
+| `bg-pattern-opacity` / `bg-pattern-color` | Pattern opacity and color |
+| `decoration-color` | Decoration color |
+
+See [Theme customization](../guide/theme-customization.md) for the full story.
+
+## Reading in components
+
+```tsx
+import { useLhConfigContext } from '@lh-ui/react'
+
+function Probe() {
+  const { size, locale } = useLhConfigContext()
+  return <span>{size} / {locale}</span>
+}
+```
+
+:::tip[Consumer fallback]
+When no `LhConfigProvider` wraps the tree, `useLhConfigContext()` returns a fallback object with every field `undefined` (not `null`), so components need no null checks. This is an intentional difference from plus.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/config-provider'
+```

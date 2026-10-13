@@ -1,0 +1,57 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import IconBasic from '@site/demos/icon/basic'
+
+# Icon 图标
+
+语义化图标组件，基于内建 SVG 图标集。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <IconBasic />
+</DemoBlock>
+
+```tsx
+import { LhIcon } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <>
+      <LhIcon name="search" />
+      <LhIcon name="search" size={32} />
+      <LhIcon name="search" color="var(--lh-primary-color, #1677ff)" />
+      <LhIcon name="loading" color="var(--lh-success-color, #52c41a)" />
+    </>
+  )
+}
+```
+
+## Icon Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| name | 图标名 | `LhIconName` | 见 `@lh-ui/share/core/icon` | — |
+| size | 尺寸 | `number \| 'small' \| 'middle' \| 'large'` | — | 跟随 ConfigProvider |
+| color | 颜色 | `string` | — | `currentColor` |
+| decorative | 装饰态（输出 `aria-hidden`） | `boolean` | — | `true` |
+| ariaLabel | 无障碍标签（`decorative={false}` 时生效） | `string` | — | — |
+| themeVars | 组件级主题变量 | `Record<string, string>` | — | — |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+:::tip[无障碍]
+默认 `decorative` 为 `true`，图标对屏幕阅读器不可见。若图标携带语义，传 `decorative={false}` 与 `ariaLabel`，此时渲染 `<svg role="img" aria-label>`。
+:::
+
+## children 兜底
+
+未传 `name` 但传了 `children` 时，组件直接渲染 children（用于包裹自定义 SVG）：
+
+```tsx
+<LhIcon><MyCustomSvg /></LhIcon>
+```
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/icon'
+```

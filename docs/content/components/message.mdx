@@ -1,0 +1,62 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import MessageBasic from '@site/demos/message/basic'
+
+# Message 消息提示
+
+全局浮层的轻量反馈：操作成功 / 失败、网络状态等。挂载在单例容器中，多条消息自上而下堆叠。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <MessageBasic />
+</DemoBlock>
+
+```tsx
+import { message } from '@lh-ui/react'
+import '@lh-ui/react/style/message'
+
+message.success('保存成功')
+```
+
+## message 方法
+
+| 方法 | 说明 | 返回值 |
+| --- | --- | --- |
+| info / success / warning / error / danger | 显示消息 | `{ close }` |
+| loading | 显示加载消息（默认不自动关闭） | `{ close }` |
+| destroyAll | 关闭全部消息并卸载容器 | `void` |
+
+返回的句柄用于主动关闭：
+
+```tsx
+const handle = message.loading('正在上传…', { duration: 0 })
+// ...
+handle.close()
+```
+
+## LhMessageOptions
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| duration | 自动关闭毫秒数，`0` 不自动关闭（loading 语义默认 0） | `number` | `3000` |
+| showClose | 是否显示关闭按钮 | `boolean` | `false` |
+| offset | 距视口顶部偏移 px | `number` | `20` |
+| closeLabel | 关闭按钮的 aria-label | `string` | 语言包（zh-CN：`关闭提示`） |
+| onClose | 关闭时回调 | `() => void` | — |
+| sx | 快速布局属性 | `SxProps` | — |
+
+:::tip[与 Vue 版的事件映射]
+`message.success('x')` 对应 plus 的 `LhMessage.success('x')`；句柄的 `close()` 对应
+plus 的 `LhMessage.close(id)`。React 侧用返回值而非全局 id 管理。
+:::
+
+:::tip[无障碍]
+成功 / 信息为 `role="status"`（排队播报），错误 / 警告为 `role="alert"`（立即播报），
+与 [Alert](./alert.mdx)、[Notification](./notification.mdx) 同范式。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/message'
+```

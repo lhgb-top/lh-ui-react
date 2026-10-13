@@ -1,0 +1,94 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import DialogBasic from '@site/demos/dialog/basic'
+
+# Dialog
+
+Informs the user and hosts related actions while preserving the current page state.
+
+## Basic usage
+
+<DemoBlock title="Controlled dialog">
+  <DialogBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhButton, LhDialog } from '@lh-ui/react'
+
+export default function Demo() {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <>
+      <LhButton type="primary" onClick={() => setOpen(true)}>
+        Open dialog
+      </LhButton>
+      <LhDialog
+        open={open}
+        title="Notice"
+        width="420px"
+        footer={
+          <>
+            <LhButton onClick={() => setOpen(false)}>Cancel</LhButton>
+            <LhButton type="primary" onClick={() => setOpen(false)}>OK</LhButton>
+          </>
+        }
+        onClose={() => setOpen(false)}
+      >
+        <p>This is a controlled dialog.</p>
+      </LhDialog>
+    </>
+  )
+}
+```
+
+## Dialog Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| open | Whether the dialog is open (**fully controlled**) | `boolean` | — | `false` |
+| title | Title (also used as the aria-label fallback when there is no header) | `string` | — | — |
+| width | Width | `string \| number` | — | — |
+| fullscreen | Fullscreen | `boolean` | — | `false` |
+| showClose | Whether to show the close button | `boolean` | — | `true` |
+| closeOnClickModal | Close on modal click | `boolean` | — | `true` |
+| closeOnPressEscape | Close on Esc | `boolean` | — | `true` |
+| draggable | Draggable (by the title bar) | `boolean` | — | `false` |
+| center | Center the title and footer | `boolean` | — | `false` |
+| position | Custom positioning offsets | `{ top?: string; left?: string }` | — | — |
+| lockScroll | Lock body scroll while open | `boolean` | — | `true` |
+| beforeClose | Intercept before closing (returning `false` / `Promise<false>` keeps it open) | `() => boolean \| Promise<boolean>` | — | — |
+| top | Distance from the top | `string` | — | — |
+| zIndex | z-index (by default assigned increasingly by useLhZIndex) | `number` | — | — |
+| header | Custom header (overrides title) | `ReactNode` | — | — |
+| footer | Custom footer | `ReactNode` | — | — |
+| themeVars | Component-level theme variables | `Record<string, string>` | — | — |
+| sx | Shorthand layout props | `SxProps` | — | — |
+
+## Dialog events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onClose | Close request (triggered by the modal / Esc / close button; not called if beforeClose intercepts) | `() => void` | `update:modelValue` |
+| onOpen | Emitted the instant it opens (DOM mounted) | `() => void` | `@open` |
+| onOpened | Emitted after the open transition ends | `() => void` | `@opened` |
+| onCloseStart | Emitted when the close transition begins | `() => void` | `@close` |
+| onClosed | Emitted after the close transition ends (DOM unmounted) | `() => void` | `@closed` |
+
+## ref
+
+`forwardRef<HTMLDivElement>`. `LhDialogInstance` currently exposes no imperative methods.
+
+:::tip[Fully controlled semantics]
+Unlike plus, this library's Dialog **has no internal isVisible intermediate state**: `open` is held entirely by external state, and any close path only calls `onClose`. See the [migration guide](../guide/migration.md#8-dialog-纯受控).
+:::
+
+:::tip[Esc with multiple overlays]
+`useLhOverlayStack` maintains an open-order stack, and Esc only closes the top overlay, preventing one keystroke from dismissing every overlay.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/dialog'
+```

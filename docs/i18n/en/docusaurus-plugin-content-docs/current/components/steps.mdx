@@ -1,0 +1,94 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import StepsBasic from '@site/demos/steps/basic'
+
+# Steps
+
+Guides users through a process step by step, supporting horizontal / vertical layouts, clickable navigation, and an overall status override.
+
+## Basic usage
+
+<DemoBlock title="Basic usage">
+  <StepsBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhSteps, LhStep } from '@lh-ui/react'
+
+export default function Demo() {
+  const [current, setCurrent] = useState(1)
+
+  return (
+    <LhSteps current={current} onChange={(index) => setCurrent(index)}>
+      <LhStep title="Draft" description="Define composition and lines" />
+      <LhStep title="Wash" description="Layer the ink wash" />
+      <LhStep title="Color" description="Dot on the danqing colors" />
+      <LhStep title="Inscribe" description="Add the inscription and seal" />
+    </LhSteps>
+  )
+}
+```
+
+## Steps Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| current | Current step index (0-based, controlled) | `number` | — | — |
+| defaultCurrent | Current step default (uncontrolled) | `number` | — | `0` |
+| direction | Direction | `'horizontal' \| 'vertical'` | — | `'horizontal'` |
+| clickable | Whether steps are clickable for navigation | `boolean` | — | `false` |
+| status | Overall status overriding every step (for custom displays) | `'wait' \| 'process' \| 'finish' \| 'error'` | — | — |
+| themeVars | Component-level theme variables (keys are automatically prefixed with `--lh-`) | `Record<string, string>` | — | — |
+| sx | Shorthand layout props | `SxProps` | — | — |
+
+### Step Props
+
+| Prop | Description | Type | Default |
+| --- | --- | --- | --- |
+| title | Step title | `ReactNode` | — |
+| description | Step description | `ReactNode` | — |
+| icon | Custom icon name (when omitted, finish / error use a check / cross and the rest show the index) | `LhIconName` | — |
+
+## Steps events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onChange | Emitted when the current step changes (only when `clickable` is set) | `(index: number) => void` | `@change` |
+
+:::tip[Controlled / uncontrolled]
+Passing `current` makes the component controlled (no internal state); passing `defaultCurrent` uses the internal uncontrolled state. `onChange` fires in both modes.
+:::
+
+:::tip[Clickable range]
+Even when `clickable` is true, only "finished" and "in progress" steps render as `<button>` elements; future steps (`wait` state) are always `<span>` elements, preventing jumps to unreached process nodes — consistent with lh-ui-plus.
+:::
+
+:::warning[Child node restriction]
+`children` must be `LhStep` elements directly (you may render them with `.map`); they cannot be wrapped in a custom component — the parent injects indices by filtering child element types via `Children.toArray`, and wrapping breaks index injection and status computation.
+:::
+
+## Theme variables
+
+Keys of `themeVars` are automatically prefixed with `--lh-` and written to the root element's inline style:
+
+```tsx
+<LhSteps current={1} themeVars={{ 'steps-item-basis': '72px' }}>
+  <LhStep title="Draft" />
+  <LhStep title="Wash" />
+</LhSteps>
+```
+
+## Accessibility
+
+The list is `<ol role="list">`; the current step emits `aria-current="step"`, and each step's status is expressed jointly by an `aria-label` (locale pack `steps.step` template, e.g. "Step 2") and status class names.
+
+## ref
+
+`forwardRef<HTMLOListElement>` — the `<ol>` root element. `LhStep` forwards `HTMLLIElement`.
+
+## Styles
+
+```ts
+import '@lh-ui/react/theme.css'
+import '@lh-ui/react/style/steps'
+```

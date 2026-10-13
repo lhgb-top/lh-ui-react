@@ -1,0 +1,46 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import SpaceBasic from '@site/demos/space/basic'
+
+# Space
+
+Spacing between layout controls.
+
+## Basic usage
+
+<DemoBlock title="Basic usage">
+  <SpaceBasic />
+</DemoBlock>
+
+```tsx
+import { LhSpace } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhSpace size="large">
+      <span>Item one</span>
+      <span>Item two</span>
+      <span>Item three</span>
+    </LhSpace>
+  )
+}
+```
+
+## Space Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| direction | Arrangement direction | `'horizontal' \| 'vertical'` | — | `'horizontal'` |
+| size | Spacing | `'small' \| 'medium' \| 'large' \| number \| [number, number]` | — | `'medium'` |
+| wrap | Whether to wrap (effective horizontally only) | `boolean` | — | `true` |
+| alignment | Alignment (align-items) | `'start' \| 'center' \| 'end' \| 'baseline'` | — | `'start'` |
+| sx | Layout shorthand | `SxProps` | — | — |
+
+:::tip[Spacing implementation]
+Spacing is entirely handled by native CSS `gap`: presets map to `--lh-spacing-*` tokens (small=8 / medium=16 / large=24), numbers are treated as px, and an array `[horizontal, vertical]` controls the two axes separately. The component does not wrap its children, so there is no `SpaceItem`.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/space'
+```

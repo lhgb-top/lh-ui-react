@@ -1,0 +1,4 @@
+packages:
+  - '.'
+overrides:
+  '@lh-ui/share': link:../lh-ui-share

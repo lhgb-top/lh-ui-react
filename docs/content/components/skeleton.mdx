@@ -1,0 +1,72 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import SkeletonBasic from '@site/demos/skeleton/basic'
+
+# Skeleton 骨架屏
+
+在需要等待加载内容时的占位。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <SkeletonBasic />
+</DemoBlock>
+
+```tsx
+import { LhSkeleton } from '@lh-ui/react'
+
+export default function Demo() {
+  return <LhSkeleton avatar rows={2} sx={{ w: 300 }} />
+}
+```
+
+## Skeleton Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| loading | 是否显示骨架（`false` 时渲染子节点） | `boolean` | — | `true` |
+| rows | 文本行数 | `number` | — | `3` |
+| avatar | 是否含圆形头像占位 | `boolean` | — | `false` |
+| animated | 是否开启动画 | `boolean` | — | `true` |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+## SkeletonItem Props
+
+`LhSkeletonItem` 为独立导出的占位块，可单独使用组合任意骨架结构。
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| variant | 占位块形状 | `'text' \| 'rect' \| 'circle'` | — | `'text'` |
+| animated | 是否开启动画 | `boolean` | — | `true` |
+| className | 追加类名 | `string` | — | — |
+| style | 追加内联样式 | `CSSProperties` | — | — |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+```tsx
+import { LhSkeletonItem } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <div style={{ display: 'flex', gap: 16, width: 300 }}>
+      <LhSkeletonItem variant="circle" />
+      <div style={{ flex: 1 }}>
+        <LhSkeletonItem style={{ marginBottom: 8 }} />
+        <LhSkeletonItem style={{ width: '60%' }} />
+      </div>
+    </div>
+  )
+}
+```
+
+:::tip[行宽算法]
+`rows > 1` 时最后一行缩为 `60%`，模拟真实段落排版；根元素必须有确定宽度（行宽为百分比）。
+:::
+
+:::tip[无障碍]
+骨架容器输出 `aria-busy="true"` + `aria-live="polite"`；占位块全部 `aria-hidden`，数据就绪后读屏会重新播报真实内容。`prefers-reduced-motion` 下动画自动降级为静态占位。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/skeleton'
+```

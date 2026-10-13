@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": false,
+    "emitDeclarationOnly": true,
+    "noEmit": false,
+    "outDir": "es",
+    "rootDir": "src",
+    // 声明文件不得继承 vite/client / jest-dom（不在 dependencies 里，会泄漏进 .d.ts）；
+    // 保留 node：src 的 SSR/dev 守卫用到 process.env.NODE_ENV
+    "types": ["node"]
+  },
+  "include": ["env.d.ts", "src/**/*"],
+  "exclude": ["node_modules", "dist", "es", "lib", "coverage", "tests", "dev", "docs"]
+}

@@ -1,0 +1,246 @@
+{
+  "theme.ErrorPageContent.title": {
+    "message": "页面崩溃",
+    "description": "The title of the fallback page when the page crashed"
+  },
+  "theme.BackToTopButton.buttonAriaLabel": {
+    "message": "回到顶部",
+    "description": "The ARIA label for the back to top button"
+  },
+  "theme.docs.breadcrumbs.navAriaLabel": {
+    "message": "面包屑导航",
+    "description": "The ARIA label for the breadcrumbs"
+  },
+  "theme.docs.breadcrumbs.home": {
+    "message": "首页",
+    "description": "The ARIA label for the home page in the breadcrumbs"
+  },
+  "theme.docs.paginator.navAriaLabel": {
+    "message": "文档分页",
+    "description": "The ARIA label for the docs pagination"
+  },
+  "theme.docs.paginator.previous": {
+    "message": "上一篇",
+    "description": "The label used to navigate to the previous doc"
+  },
+  "theme.docs.paginator.next": {
+    "message": "下一篇",
+    "description": "The label used to navigate to the next doc"
+  },
+  "theme.common.editThisPage": {
+    "message": "编辑此页",
+    "description": "The link label to edit the current page"
+  },
+  "theme.lastUpdated.atDate": {
+    "message": " 于 {date}",
+    "description": "The words used to describe on which date a page has been last updated"
+  },
+  "theme.lastUpdated.byUser": {
+    "message": " 由 {user}",
+    "description": "The words used to describe by who a page has been last updated"
+  },
+  "theme.lastUpdated.lastUpdatedAtBy": {
+    "message": "最后更新{atDate}{byUser}",
+    "description": "The sentence used to display when a page has been last updated, and by who"
+  },
+  "theme.common.headingLinkTitle": {
+    "message": "指向 {heading} 的永久链接",
+    "description": "Title for link to heading"
+  },
+  "theme.NotFound.title": {
+    "message": "页面不存在",
+    "description": "The title of the 404 page"
+  },
+  "theme.NotFound.p1": {
+    "message": "找不到您要找的内容。",
+    "description": "The first paragraph of the 404 page"
+  },
+  "theme.NotFound.p2": {
+    "message": "请联系链接到原始 URL 的站点所有者，告知他们链接已失效。",
+    "description": "The 2nd paragraph of the 404 page"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "跳到主要内容",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.TOCCollapsible.toggleButtonLabel": {
+    "message": "本页目录",
+    "description": "The label used by the button on the collapsible TOC component"
+  },
+  "theme.CodeBlock.wordWrapToggle": {
+    "message": "切换自动换行",
+    "description": "The title attribute for toggle word wrapping button of code block lines"
+  },
+  "theme.CodeBlock.copy": {
+    "message": "复制",
+    "description": "The copy button label on code blocks"
+  },
+  "theme.CodeBlock.copied": {
+    "message": "已复制",
+    "description": "The copied button label on code blocks"
+  },
+  "theme.CodeBlock.copyButtonAriaLabel": {
+    "message": "复制代码到剪贴板",
+    "description": "The ARIA label for copy code blocks button"
+  },
+  "theme.colorToggle.ariaLabel.mode.system": {
+    "message": "跟随系统",
+    "description": "The name for the system color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.light": {
+    "message": "亮色模式",
+    "description": "The name for the light color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.dark": {
+    "message": "暗色模式",
+    "description": "The name for the dark color mode"
+  },
+  "theme.colorToggle.ariaLabel": {
+    "message": "切换亮色 / 暗色模式（当前：{mode}）",
+    "description": "The ARIA label for the color mode toggle"
+  },
+  "theme.docs.sidebar.collapseButtonTitle": {
+    "message": "收起侧边栏",
+    "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.collapseButtonAriaLabel": {
+    "message": "收起侧边栏",
+    "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.expandButtonTitle": {
+    "message": "展开侧边栏",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.docs.sidebar.expandButtonAriaLabel": {
+    "message": "展开侧边栏",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.docs.sidebar.navAriaLabel": {
+    "message": "文档侧边栏",
+    "description": "The ARIA label for the sidebar navigation"
+  },
+  "theme.docs.sidebar.toggleSidebarButtonAriaLabel": {
+    "message": "展开 / 收起导航栏",
+    "description": "The ARIA label for hamburger menu button of mobile navigation"
+  },
+  "theme.docs.sidebar.closeSidebarButtonAriaLabel": {
+    "message": "关闭导航栏",
+    "description": "The ARIA label for close button of mobile sidebar"
+  },
+  "theme.DocSidebarItem.expandCategoryAriaLabel": {
+    "message": "展开分类「{label}」",
+    "description": "The ARIA label to expand the sidebar category"
+  },
+  "theme.DocSidebarItem.collapseCategoryAriaLabel": {
+    "message": "收起分类「{label}」",
+    "description": "The ARIA label to collapse the sidebar category"
+  },
+  "theme.navbar.mobileLanguageDropdown.label": {
+    "message": "语言",
+    "description": "The label for the mobile language switcher dropdown"
+  },
+  "theme.navbar.mobileVersionsDropdown.label": {
+    "message": "版本",
+    "description": "The label for the navbar versions dropdown on mobile view"
+  },
+  "theme.NavBar.navAriaLabel": {
+    "message": "主导航",
+    "description": "The ARIA label for the main navigation"
+  },
+  "theme.IconExternalLink.ariaLabel": {
+    "message": "（在新标签页打开）",
+    "description": "The ARIA label for the external link icon"
+  },
+  "theme.AnnouncementBar.closeButtonAriaLabel": {
+    "message": "关闭",
+    "description": "The ARIA label for close button of announcement bar"
+  },
+  "theme.admonition.caution": {
+    "message": "注意",
+    "description": "The default label used for the Caution admonition (:::caution)"
+  },
+  "theme.admonition.danger": {
+    "message": "危险",
+    "description": "The default label used for the Danger admonition (:::danger)"
+  },
+  "theme.admonition.info": {
+    "message": "信息",
+    "description": "The default label used for the Info admonition (:::info)"
+  },
+  "theme.admonition.note": {
+    "message": "备注",
+    "description": "The default label used for the Note admonition (:::note)"
+  },
+  "theme.admonition.tip": {
+    "message": "提示",
+    "description": "The default label used for the Tip admonition (:::tip)"
+  },
+  "theme.admonition.warning": {
+    "message": "警告",
+    "description": "The default label used for the Warning admonition (:::warning)"
+  },
+  "homepage.hero.tagline": {
+    "message": "企业级 React 国风组件库",
+    "description": "The tagline line of the homepage hero"
+  },
+  "homepage.hero.subtitle": {
+    "message": "与 lh-ui-plus 同源同构，共享设计令牌、组件逻辑与样式。支持 React 18 / 19。",
+    "description": "The subtitle line of the homepage hero"
+  },
+  "homepage.hero.quickstart": {
+    "message": "快速开始",
+    "description": "The primary button label on the homepage hero"
+  },
+  "homepage.hero.components": {
+    "message": "组件总览",
+    "description": "The secondary button label on the homepage hero"
+  },
+  "homepage.features.isomorphic.title": {
+    "message": "同源同构",
+    "description": "Homepage feature card title"
+  },
+  "homepage.features.isomorphic.description": {
+    "message": "组件逻辑来自 @lh-ui/share/core，与 lh-ui-plus（Vue 3）、lh-ui-vue2 零副本共享，props 同名同义。",
+    "description": "Homepage feature card description"
+  },
+  "homepage.features.react.title": {
+    "message": "React 18 / 19",
+    "description": "Homepage feature card title"
+  },
+  "homepage.features.react.description": {
+    "message": "forwardRef 转发 ref、Context value 快照化、StrictMode 安全、SSR 友好，两个主版本都经过设计。",
+    "description": "Homepage feature card description"
+  },
+  "homepage.features.onDemand.title": {
+    "message": "按需引入",
+    "description": "Homepage feature card title"
+  },
+  "homepage.features.onDemand.description": {
+    "message": "主题与组件样式按需引入，打包器精确裁剪未用到的样式，不引入全量 side-effect。",
+    "description": "Homepage feature card description"
+  },
+  "homepage.features.theme.title": {
+    "message": "国风水墨",
+    "description": "Homepage feature card title"
+  },
+  "homepage.features.theme.description": {
+    "message": "五套预设色板（青蓝 / 松花 / 朱砂 / 水墨 / 鎏金）、花纹背景系统、明暗双模式。",
+    "description": "Homepage feature card description"
+  },
+  "homepage.features.a11y.title": {
+    "message": "无障碍",
+    "description": "Homepage feature card title"
+  },
+  "homepage.features.a11y.description": {
+    "message": "ARIA 语义、键盘交互、焦点管理全部在共享层定义，各端实现一致，符合 APG 模式。",
+    "description": "Homepage feature card description"
+  },
+  "homepage.features.types.title": {
+    "message": "类型完备",
+    "description": "Homepage feature card title"
+  },
+  "homepage.features.types.description": {
+    "message": "TypeScript 编写，tsc 镜像直出 d.ts，props 类型与 Vue 版一一对应。",
+    "description": "Homepage feature card description"
+  }
+}

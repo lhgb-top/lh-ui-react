@@ -1,0 +1,60 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import CardBasic from '@site/demos/card/basic'
+
+# Card
+
+A general-purpose card container.
+
+## Basic usage
+
+<DemoBlock title="Basic usage">
+  <CardBasic />
+</DemoBlock>
+
+```tsx
+import { LhCard } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhCard title="Ink landscape" style={{ width: 300 }}>
+      <p>Distant mountains like indigo, nearby waters veiled in mist.</p>
+    </LhCard>
+  )
+}
+```
+
+## Card Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| title | Title (renders the default header when there is no `header`) | `string` | — | — |
+| shadow | When to show the shadow | `'always' \| 'hover' \| 'never'` | — | `'always'` |
+| clickable | Whole card clickable (carries button keyboard semantics) | `boolean` | — | `false` |
+| loading | Loading (skeleton placeholder in the body; the whole card blocks interaction) | `boolean` | — | `false` |
+| cover | Cover area | `ReactNode` | — | — |
+| header | Header content (overrides the default header) | `ReactNode` | — | — |
+| extra | Extra area on the right of the header | `ReactNode` | — | — |
+| footer | Footer area | `ReactNode` | — | — |
+| themeVars | Component-level theme variables, overriding ConfigProvider | `Record<string, string>` | — | — |
+| bgPattern | Component-level background pattern | `string` | — | — |
+| sx | Layout shorthand | `SxProps` | — | — |
+
+## Card events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onClick | Fired on click (only when `clickable` and not `loading`) | `(event: MouseEvent) => void` | `@click` |
+
+:::tip[Keyboard interaction]
+When `clickable` and not `loading`, the card renders as `role="button"` and responds to Enter / Space (Space calls `preventDefault` to avoid scrolling). See [Accessibility](../guide/accessibility.md).
+:::
+
+:::tip[Vue slot mapping]
+The `cover` / `header` / `extra` / `footer` slots of plus map to same-named `ReactNode` props on the React side; the default slot becomes `children`.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/card'
+```

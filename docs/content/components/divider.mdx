@@ -1,0 +1,52 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import DividerBasic from '@site/demos/divider/basic'
+
+# Divider 分割线
+
+区隔内容的分割线。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <DividerBasic />
+</DemoBlock>
+
+```tsx
+import { LhDivider } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <>
+      <span>春水碧于天，画船听雨眠。</span>
+      <LhDivider />
+      <span>垆边人似月，皓腕凝霜雪。</span>
+      <LhDivider dashed />
+      <LhDivider labelPosition="left">左对齐分组</LhDivider>
+    </>
+  )
+}
+```
+
+## Divider Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| direction | 方向 | `'horizontal' \| 'vertical'` | — | `'horizontal'` |
+| dashed | 是否虚线 | `boolean` | — | `false` |
+| labelPosition | 文案位置（水平方向生效，垂直恒居中） | `'left' \| 'center' \| 'right'` | — | `'center'` |
+| borderStyle | 边框样式（显式指定时优先于 `dashed`） | `string` | `'solid' \| 'dashed' \| 'dotted'` … | — |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+:::tip[无障碍]
+带文案的分割线渲染为 `role="separator"`（真分组语义）；纯装饰的为 `role="presentation"`，移出无障碍树。仅「带文案且垂直」时输出 `aria-orientation="vertical"`。
+:::
+
+:::warning[已知行为]
+`borderStyle="dotted"` 会输出 `lh-divider--dotted` 修饰符，但样式层目前只实现了 `--dashed`，会回退为实线 —— 与 lh-ui-plus 行为一致。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/divider'
+```

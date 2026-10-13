@@ -1,0 +1,84 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import SelectBasic from '@site/demos/select/basic'
+
+# Select 选择器
+
+下拉选择器，支持受控 / 非受控、键盘导航、清空。
+
+## 基础用法
+
+<DemoBlock title="受控选择">
+  <SelectBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhSelect } from '@lh-ui/react'
+import type { LhSelectOption } from '@lh-ui/react'
+
+const options: LhSelectOption[] = [
+  { label: '水墨', value: 'ink' },
+  { label: '丹青', value: 'danqing' },
+  { label: '留白', value: 'blank' },
+  { label: '工笔', value: 'gongbi' },
+]
+
+export default function Demo() {
+  const [value, setValue] = useState<string>('')
+
+  return (
+    <LhSelect
+      value={value}
+      options={options}
+      placeholder="请选择画风"
+      onChange={(val) => setValue(val as string)}
+    />
+  )
+}
+```
+
+## Select Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| value | 受控值 | `unknown` | — | — |
+| defaultValue | 非受控默认值 | `unknown` | — | — |
+| options | 选项列表 | `LhSelectOption[]` | — | `[]` |
+| placeholder | 占位符 | `string` | — | 语言包兜底 |
+| disabled | 禁用 | `boolean` | — | `false` |
+| clearable | 可清空 | `boolean` | — | `false` |
+| size | 尺寸 | `'large' \| 'middle' \| 'small'` | — | 跟随 ConfigProvider |
+| name | 原生 name 属性 | `string` | — | — |
+| ariaLabel | 无障碍标签 | `string` | — | — |
+| placement | 下拉位置 | `LhPlacement` | — | `'bottom-start'` |
+| themeVars | 组件级主题变量 | `Record<string, string>` | — | — |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+### LhSelectOption
+
+| 属性 | 说明 | 类型 |
+| --- | --- | --- |
+| label | 选项展示文案 | `string` |
+| value | 选项值 | `unknown` |
+| disabled | 禁用该选项 | `boolean` |
+
+## Select 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onChange | 选中时触发（双参数：值与选项对象） | `(value: unknown, option: LhSelectOption \| undefined) => void` | `@change` |
+| onClear | 清空时触发 | `() => void` | `@clear` |
+
+## 键盘交互
+
+展开后：`ArrowUp` / `ArrowDown` 高亮选项（跳过禁用项），`Enter` 选中，`Escape` 收起。触发器为 `role="combobox"`，面板为 `role="listbox"`，选项为 `role="option"`，并用 `aria-activedescendant` 同步高亮。
+
+## ref
+
+`forwardRef<HTMLDivElement>` —— 触发器根元素。`LhSelectInstance` 暴露 `open()` / `close()` / `focus()`。
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/select'
+```

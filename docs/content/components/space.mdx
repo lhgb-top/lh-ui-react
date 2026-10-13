@@ -1,0 +1,46 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import SpaceBasic from '@site/demos/space/basic'
+
+# Space 间距
+
+布局控件之间的间距。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <SpaceBasic />
+</DemoBlock>
+
+```tsx
+import { LhSpace } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhSpace size="large">
+      <span>项目一</span>
+      <span>项目二</span>
+      <span>项目三</span>
+    </LhSpace>
+  )
+}
+```
+
+## Space Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| direction | 排列方向 | `'horizontal' \| 'vertical'` | — | `'horizontal'` |
+| size | 间距 | `'small' \| 'medium' \| 'large' \| number \| [number, number]` | — | `'medium'` |
+| wrap | 是否换行（仅水平方向生效） | `boolean` | — | `true` |
+| alignment | 对齐方式（align-items） | `'start' \| 'center' \| 'end' \| 'baseline'` | — | `'start'` |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+:::tip[间距实现]
+间距全部交给原生 CSS `gap`：预设档位映射 `--lh-spacing-*` 令牌（small=8 / medium=16 / large=24），数字视为 px，数组 `[水平, 垂直]` 分别控制两轴。组件不包裹子项，无需 `SpaceItem`。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/space'
+```

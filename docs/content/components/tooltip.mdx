@@ -1,0 +1,75 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import TooltipBasic from '@site/demos/tooltip/basic'
+
+# Tooltip 文字提示
+
+常用于展示鼠标 hover 时的提示信息。
+
+## 基础用法
+
+<DemoBlock title="方位与触发方式">
+  <TooltipBasic />
+</DemoBlock>
+
+```tsx
+import { LhButton, LhTooltip } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <>
+      <LhTooltip content="上方提示" placement="top">
+        <LhButton>上</LhButton>
+      </LhTooltip>
+      <LhTooltip content="点击触发" trigger="click">
+        <LhButton>点击</LhButton>
+      </LhTooltip>
+      <LhTooltip content="语义色提示" type="success">
+        <LhButton>语义色</LhButton>
+      </LhTooltip>
+    </>
+  )
+}
+```
+
+## Tooltip Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| content | 提示内容 | `string` | — | — |
+| placement | 展示位置 | `LhTooltipPlacement` | `top` / `bottom` / `left` / `right`（含 `-start` / `-end`） | `'top'` |
+| trigger | 触发方式 | `'hover' \| 'click' \| 'focus'` | — | `'hover'` |
+| disabled | 禁用提示 | `boolean` | — | `false` |
+| visible | 受控显隐 | `boolean` | — | — |
+| defaultVisible | 非受控默认显隐 | `boolean` | — | `false` |
+| showAfter / openDelay | 延迟显示（ms，互为别名） | `number` | — | `0` |
+| hideAfter / closeDelay | 延迟隐藏（ms，互为别名） | `number` | — | `0` |
+| effect | 主题 | `'dark' \| 'light'` | — | `'dark'` |
+| type | 语义色类型（覆盖 effect 背景色） | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | — | — |
+| bgColor | 自定义背景色（覆盖 effect 与 type） | `string` | — | — |
+| maxWidth | 最大宽度 | `string \| number` | — | `'200px'` |
+| themeVars | 组件级主题变量 | `Record<string, string>` | — | — |
+| sx | 快速布局属性（作用于触发器） | `SxProps` | — | — |
+
+## Tooltip 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onVisibleChange | 显隐变化（受控与非受控都会触发） | `(visible: boolean) => void` | `update:visible` |
+
+## ref
+
+`forwardRef<HTMLDivElement>` —— 触发器根元素。`LhTooltipInstance` 暴露 `show()` / `hide()` / `toggle()`。
+
+:::tip[受控简化]
+与 plus 不同，本库**没有 `manual` 开关**：传了 `visible` 就是受控，`onVisibleChange` 通知外部。详见 [迁移指南](../guide/migration.md#11-tooltip-受控简化)。
+:::
+
+:::tip[滚动收起]
+触发器滚出视口时提示自动收起（`onScrollOut`），避免 fixed 弹层浮在页面内容之上。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/tooltip'
+```

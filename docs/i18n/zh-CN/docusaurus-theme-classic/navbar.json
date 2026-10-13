@@ -1,0 +1,30 @@
+{
+  "title": {
+    "message": "lh-ui-react",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "lh-ui logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.指南": {
+    "message": "指南",
+    "description": "Navbar item with label 指南"
+  },
+  "item.label.组件": {
+    "message": "组件",
+    "description": "Navbar item with label 组件"
+  },
+  "item.label.Vue3 版": {
+    "message": "Vue3 版",
+    "description": "Navbar item with label Vue3 版"
+  },
+  "item.label.Vue2 版": {
+    "message": "Vue2 版",
+    "description": "Navbar item with label Vue2 版"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}

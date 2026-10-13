@@ -1,0 +1,81 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import PaginationBasic from '@site/demos/pagination/basic'
+
+# Pagination 分页
+
+数据量过多时分页展示，支持受控 / 非受控、每页条数切换、跳页。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <PaginationBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhPagination } from '@lh-ui/react'
+
+export default function Demo() {
+  const [current, setCurrent] = useState(1)
+
+  return (
+    <LhPagination
+      total={128}
+      current={current}
+      onChange={(page) => setCurrent(page)}
+    />
+  )
+}
+```
+
+## Pagination Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| total | 数据总数（必填） | `number` | — | — |
+| current | 当前页（受控，1 起） | `number` | — | — |
+| defaultCurrent | 当前页默认值（非受控） | `number` | — | `1` |
+| pageSize | 每页条数（受控） | `number` | — | — |
+| defaultPageSize | 每页条数默认值（非受控） | `number` | — | `10` |
+| pageSizes | 每页条数选项 | `number[]` | — | `[10, 20, 30, 40]` |
+| siblingCount | 当前页两侧各显示的页码数 | `number` | — | `1` |
+| showTotal | 是否显示总条数 | `boolean` | — | `false` |
+| showSizeChanger | 是否显示每页条数切换 | `boolean` | — | `false` |
+| showJumper | 是否显示跳页输入 | `boolean` | — | `false` |
+| simple | 紧凑模式 | `boolean` | — | `false` |
+| disabled | 是否禁用 | `boolean` | — | `false` |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+## Pagination 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onChange | 页码变化时触发（切页、跳页、每页条数变化导致的钳制都会触发） | `(current: number, pageSize: number) => void` | `@change` |
+| onSizeChange | 每页条数变化时触发 | `(pageSize: number) => void` | `@size-change` |
+
+:::tip[受控 / 非受控]
+传 `current` 即受控（组件不持有内部态，由外部驱动）；传 `defaultCurrent` 走非受控内部态。`pageSize` 同理。两种模式下 `onChange` 都会触发。
+:::
+
+:::tip[页码钳制]
+`pageSize` 变化导致总页数缩小时，若当前页超出范围，组件会在 effect 中自动钳制回末页并触发 `onChange`，无需业务侧兜底。
+:::
+
+## 键盘交互
+
+跳页输入框：`Enter` 提交跳转，失焦时也会提交；非法值（越界或非数字）被钳制到有效区间。
+
+## 无障碍
+
+根元素为 `<nav aria-label>`；当前页输出 `aria-current="page"`，各页码按钮带 `aria-label`（语言包 `pagination.page` 模板，如「第 3 页」）。
+
+## ref
+
+`forwardRef<HTMLElement>` —— `<nav>` 根元素。
+
+## 样式
+
+```ts
+import '@lh-ui/react/theme.css'
+import '@lh-ui/react/style/pagination'
+```

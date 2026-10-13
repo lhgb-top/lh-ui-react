@@ -1,0 +1,63 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import NotificationBasic from '@site/demos/notification/basic'
+
+# Notification
+
+Heavier feedback than Message: carries a title / body / type icon, pops from the four corners, and suits longer system notifications.
+
+## Basic usage
+
+<DemoBlock title="Basic usage">
+  <NotificationBasic />
+</DemoBlock>
+
+```tsx
+import { notification } from '@lh-ui/react'
+import '@lh-ui/react/style/notification'
+
+notification.success({ title: 'Saved successfully', content: 'The work has been published to the gallery.' })
+
+// String shorthand: only the title line is rendered
+notification.info('System notification')
+```
+
+## notification methods
+
+| Method | Description | Return value |
+| --- | --- | --- |
+| info / success / warning / error / danger | Show a notification | `{ close }` |
+| close | Close the given notification (plays the leave animation first) | `void` |
+| closeAll | Close all notifications and unmount the container | `void` |
+
+```tsx
+const handle = notification.warning({ title: 'Insufficient storage space' })
+handle.close()
+```
+
+## LhNotificationOptions
+
+| Prop | Description | Type | Default |
+| --- | --- | --- | --- |
+| title | Title (falls back to content when omitted) | `string` | — |
+| content | Body (when equal to title, only the title line is rendered) | `string` | — |
+| duration | Auto-close duration in ms; `0` never auto-closes | `number` | `4500` |
+| position | Pop position | `'top-right' \| 'top-left' \| 'bottom-right' \| 'bottom-left'` | `'top-right'` |
+| showClose | Whether to show the close button | `boolean` | `true` |
+| closeLabel | aria-label of the close button | `string` | Locale pack (en-US: `Close notification`) |
+| onClick | Click callback (the card becomes clickable once passed) | `() => void` | — |
+| onClose | Callback on close | `() => void` | — |
+| sx | Shorthand layout props | `SxProps` | — |
+
+:::tip[Leave animation]
+React has no transition-group, so each entry manages its own exit: on close it plays `lh-notification-slide-leave-*` (280ms) first, then removes the record. **The FLIP repositioning animation is not implemented**: sibling cards jump instantly when entries are added or removed, and the stacking gap is handled by the container's flex gap.
+:::
+
+:::tip[Accessibility]
+`warning` / `danger` are `role="alert"` (immediate announcement), `info` / `success` are `role="status"` (queued announcement); the container is `role="region"` + `aria-live="polite"`.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/notification'
+```

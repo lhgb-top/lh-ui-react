@@ -1,0 +1,96 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import InputBasic from '@site/demos/input/basic'
+import InputFeatures from '@site/demos/input/features'
+
+# Input
+
+Accepts manually entered and validated content, with controlled / uncontrolled modes, a character counter, clearing, and auto-growing textareas.
+
+## Basic usage
+
+<DemoBlock title="Controlled input">
+  <InputBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhInput } from '@lh-ui/react'
+
+export default function Demo() {
+  const [value, setValue] = useState('')
+
+  return <LhInput value={value} onChange={(val) => setValue(val)} placeholder="Controlled input" />
+}
+```
+
+## Features
+
+<DemoBlock title="Clearable / character limit / password / auto-growing textarea">
+  <InputFeatures />
+</DemoBlock>
+
+```tsx
+import { LhInput } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <>
+      <LhInput placeholder="Clearable" clearable />
+      <LhInput placeholder="Character limit" maxlength={10} showWordLimit />
+      <LhInput placeholder="Password" type="password" />
+      <LhInput
+        placeholder="Textarea"
+        type="textarea"
+        autosize={{ minRows: 2, maxRows: 4 }}
+      />
+    </>
+  )
+}
+```
+
+## Input Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| value | Controlled value | `string` | — | — |
+| defaultValue | Uncontrolled default value | `string` | — | — |
+| type | Native type | `'text' \| 'password' \| 'number' \| 'email' \| 'tel' \| 'url' \| 'search' \| 'textarea' \| ...` | — | `'text'` |
+| placeholder | Placeholder | `string` | — | Locale pack fallback (en-US: `Please enter`) |
+| disabled | Whether to disable | `boolean` | — | `false` |
+| readonly | Whether to be read-only | `boolean` | — | `false` |
+| maxlength | Maximum input length (truncated when exceeded) | `number` | — | — |
+| showWordLimit | Whether to show the character counter | `boolean` | — | `false` |
+| clearable | Whether to be clearable | `boolean` | — | `false` |
+| showPassword | Password visibility toggle (renders an eye button in the suffix when type is `password`; a React-first feature) | `boolean` | — | `false` |
+| autosize | Auto-growing textarea height | `boolean \| { minRows?: number; maxRows?: number }` | — | `false` |
+| label | Floating label | `string` | — | — |
+| prefixIcon / suffixIcon | Prefix / suffix icons | `LhIconName` | — | — |
+| size | Size | `'large' \| 'middle' \| 'small'` | — | Follows ConfigProvider |
+| name | Native name attribute | `string` | — | — |
+| themeVars | Component-level theme variables | `Record<string, string>` | — | — |
+| sx | Shorthand layout props | `SxProps` | — | — |
+
+## Input events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onChange | Value change (two arguments) | `(value: string, event: ChangeEvent) => void` | `@change` |
+| onInput | Native input event | `(event: InputEvent) => void` | `@input` |
+| onFocus | Gains focus | `(event: FocusEvent) => void` | `@focus` |
+| onBlur | Loses focus | `(event: FocusEvent) => void` | `@blur` |
+| onClear | Clear button click | `(event: MouseEvent) => void` | `@clear` |
+| onKeyDown | Native keyboard event | `(event: KeyboardEvent) => void` | `@keydown` |
+
+:::tip[The two arguments of onChange]
+`onChange(value, event)` is isomorphic with lh-ui-plus's `emit('change', [val, e])`, easing migration. See the [migration guide](../guide/migration.md#5-input-的-onchange-双参数).
+:::
+
+## ref
+
+`forwardRef<HTMLInputElement | HTMLTextAreaElement>` — the focusable native element.
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/input'
+```

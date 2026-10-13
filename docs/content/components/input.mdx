@@ -1,0 +1,96 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import InputBasic from '@site/demos/input/basic'
+import InputFeatures from '@site/demos/input/features'
+
+# Input 输入框
+
+通过手动输入并验证内容，支持受控 / 非受控、字数限制、清空、多行自适应等。
+
+## 基础用法
+
+<DemoBlock title="受控输入">
+  <InputBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhInput } from '@lh-ui/react'
+
+export default function Demo() {
+  const [value, setValue] = useState('')
+
+  return <LhInput value={value} onChange={(val) => setValue(val)} placeholder="受控输入框" />
+}
+```
+
+## 特性
+
+<DemoBlock title="清空 / 字数限制 / 密码 / 多行自适应">
+  <InputFeatures />
+</DemoBlock>
+
+```tsx
+import { LhInput } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <>
+      <LhInput placeholder="可清空" clearable />
+      <LhInput placeholder="字数限制" maxlength={10} showWordLimit />
+      <LhInput placeholder="密码框" type="password" />
+      <LhInput
+        placeholder="多行输入"
+        type="textarea"
+        autosize={{ minRows: 2, maxRows: 4 }}
+      />
+    </>
+  )
+}
+```
+
+## Input Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| value | 受控值 | `string` | — | — |
+| defaultValue | 非受控默认值 | `string` | — | — |
+| type | 原生类型 | `'text' \| 'password' \| 'number' \| 'email' \| 'tel' \| 'url' \| 'search' \| 'textarea' \| ...` | — | `'text'` |
+| placeholder | 占位符 | `string` | — | 语言包兜底（zh-CN：`请输入`） |
+| disabled | 禁用 | `boolean` | — | `false` |
+| readonly | 只读 | `boolean` | — | `false` |
+| maxlength | 最大输入长度（超过截断） | `number` | — | — |
+| showWordLimit | 显示字数统计 | `boolean` | — | `false` |
+| clearable | 可清空 | `boolean` | — | `false` |
+| showPassword | 密码显隐（type 为 `password` 时后缀渲染眼睛按钮，React 首创） | `boolean` | — | `false` |
+| autosize | 多行自适应高度 | `boolean \| { minRows?: number; maxRows?: number }` | — | `false` |
+| label | 浮动标签 | `string` | — | — |
+| prefixIcon / suffixIcon | 前后缀图标 | `LhIconName` | — | — |
+| size | 尺寸 | `'large' \| 'middle' \| 'small'` | — | 跟随 ConfigProvider |
+| name | 原生 name 属性 | `string` | — | — |
+| themeVars | 组件级主题变量 | `Record<string, string>` | — | — |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+## Input 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onChange | 值变化（双参数） | `(value: string, event: ChangeEvent) => void` | `@change` |
+| onInput | 原生输入事件 | `(event: InputEvent) => void` | `@input` |
+| onFocus | 获得焦点 | `(event: FocusEvent) => void` | `@focus` |
+| onBlur | 失去焦点 | `(event: FocusEvent) => void` | `@blur` |
+| onClear | 清空按钮点击 | `(event: MouseEvent) => void` | `@clear` |
+| onKeyDown | 原生键盘事件 | `(event: KeyboardEvent) => void` | `@keydown` |
+
+:::tip[onChange 的双参数]
+`onChange(value, event)` 与 lh-ui-plus 的 `emit('change', [val, e])` 同构，方便迁移。详见 [迁移指南](../guide/migration.md#5-input-的-onchange-双参数)。
+:::
+
+## ref
+
+`forwardRef<HTMLInputElement | HTMLTextAreaElement>` —— 可聚焦原生元素。
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/input'
+```

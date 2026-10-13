@@ -1,0 +1,70 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import PopoverBasic from '@site/demos/popover/basic'
+
+# Popover 气泡卡片
+
+与 Tooltip 类似，但可承载标题与更丰富的内容（HTML 结构、列表等），点击或悬停触发。
+
+## 基础用法
+
+<DemoBlock title="方位、触发方式与箭头">
+  <PopoverBasic />
+</DemoBlock>
+
+```tsx
+import { LhButton, LhPopover } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhPopover title="标题" content="这是气泡卡片的内容。" placement="top">
+      <LhButton>上方</LhButton>
+    </LhPopover>
+  )
+}
+```
+
+## Popover Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| children | 触发器节点 | `ReactNode` | — | — |
+| title | 标题（渲染为 `__title` 区） | `ReactNode` | — | — |
+| content | 内容（渲染为 `__content` 区） | `ReactNode` | — | — |
+| placement | 展示位置 | `LhPopoverPlacement` | `top` / `bottom` / `left` / `right`（含 `-start` / `-end`） | `'top'` |
+| trigger | 触发方式 | `LhPopoverTrigger` | `'hover' \| 'click' \| 'focus' \| 'manual'` | `'click'` |
+| disabled | 禁用气泡 | `boolean` | — | `false` |
+| arrow | 是否显示箭头 | `boolean` | — | `true` |
+| width | 浮层宽度 | `string \| number` | — | — |
+| visible | 受控显隐 | `boolean` | — | — |
+| defaultVisible | 非受控默认显隐 | `boolean` | — | `false` |
+| showAfter | 延迟显示（ms，默认 200 防误触） | `number` | — | `200` |
+| hideAfter | 延迟隐藏（ms，默认 100 留给指针移进浮层） | `number` | — | `100` |
+| popperClass | 浮层自定义类名 | `string` | — | — |
+| themeVars | 组件级主题变量 | `Record<string, string>` | — | — |
+| bgPattern | 组件级背景花纹 | `string` | — | — |
+| sx | 快速布局属性（作用于触发器） | `SxProps` | — | — |
+
+## Popover 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onVisibleChange | 显隐变化（受控与非受控都会触发） | `(visible: boolean) => void` | `update:visible` |
+
+## ref
+
+`forwardRef<HTMLDivElement>` —— 触发器根元素。`LhPopoverInstance` 暴露 `show()` / `hide()` / `toggle()` / `isVisible`。
+
+:::tip[圈焦]
+`trigger="click"` 时弹出层按对话框语义圈住焦点（Tab 在内部循环），关闭时归还；
+`hover` / `focus` 触发不抢焦点，与 plus 的 `isModal` 行为一致。
+:::
+
+:::tip[无障碍]
+浮层为 `role="dialog"`；标题存在时以 `aria-labelledby` 关联，触发器以 `aria-describedby` 关联浮层。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/popover'
+```

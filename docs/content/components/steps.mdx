@@ -1,0 +1,94 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import StepsBasic from '@site/demos/steps/basic'
+
+# Steps 步骤条
+
+引导用户按流程完成任务，支持横向 / 纵向、可点击导航、整体状态覆盖。
+
+## 基础用法
+
+<DemoBlock title="基础用法">
+  <StepsBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhSteps, LhStep } from '@lh-ui/react'
+
+export default function Demo() {
+  const [current, setCurrent] = useState(1)
+
+  return (
+    <LhSteps current={current} onChange={(index) => setCurrent(index)}>
+      <LhStep title="勾稿" description="确定构图与线条" />
+      <LhStep title="晕染" description="分层晕开墨色" />
+      <LhStep title="设色" description="点染丹青之色" />
+      <LhStep title="题款" description="落款钤印成画" />
+    </LhSteps>
+  )
+}
+```
+
+## Steps Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| current | 当前步骤索引（0 起，受控） | `number` | — | — |
+| defaultCurrent | 当前步骤默认值（非受控） | `number` | — | `0` |
+| direction | 方向 | `'horizontal' \| 'vertical'` | — | `'horizontal'` |
+| clickable | 步骤是否可点击导航 | `boolean` | — | `false` |
+| status | 整体覆盖所有步骤的状态（用于自定义展示） | `'wait' \| 'process' \| 'finish' \| 'error'` | — | — |
+| themeVars | 组件级主题变量（键自动加 `--lh-` 前缀） | `Record<string, string>` | — | — |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+### Step Props
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| title | 步骤标题 | `ReactNode` | — |
+| description | 步骤描述 | `ReactNode` | — |
+| icon | 自定义图标名称（未传时 finish / error 用勾叉，其余显示序号） | `LhIconName` | — |
+
+## Steps 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onChange | 当前步骤变化时触发（仅在 `clickable` 时触发） | `(index: number) => void` | `@change` |
+
+:::tip[受控 / 非受控]
+传 `current` 即受控（组件不持有内部态）；传 `defaultCurrent` 走非受控内部态。两种模式下 `onChange` 都会触发。
+:::
+
+:::tip[可点击范围]
+即使 `clickable` 为真，也只有「已完成」与「进行中」的步骤渲染为 `<button>`；未来步骤（`wait` 态）始终为 `<span>`，避免跳到未达成的流程节点 —— 与 lh-ui-plus 行为一致。
+:::
+
+:::warning[子节点限制]
+`children` 必须直接是 `LhStep`（可用 `.map` 渲染），不可被自定义组件包裹 —— 父组件靠 `Children.toArray` 过滤子元素类型来注入索引，包裹会导致索引注入失败、状态计算错乱。
+:::
+
+## 主题变量
+
+`themeVars` 的键会被自动加上 `--lh-` 前缀并写入根元素内联样式：
+
+```tsx
+<LhSteps current={1} themeVars={{ 'steps-item-basis': '72px' }}>
+  <LhStep title="勾稿" />
+  <LhStep title="晕染" />
+</LhSteps>
+```
+
+## 无障碍
+
+列表为 `<ol role="list">`；当前步骤输出 `aria-current="step"`，各步骤状态由 `aria-label`（语言包 `steps.step` 模板，如「第 2 步」）与状态类名共同表达。
+
+## ref
+
+`forwardRef<HTMLOListElement>` —— `<ol>` 根元素。`LhStep` 转发 `HTMLLIElement`。
+
+## 样式
+
+```ts
+import '@lh-ui/react/theme.css'
+import '@lh-ui/react/style/steps'
+```

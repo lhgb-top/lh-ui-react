@@ -1,0 +1,74 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import RadioBasic from '@site/demos/radio/basic'
+
+# Radio 单选框
+
+在一组备选项中进行单选，支持单个使用与 `LhRadioGroup` 组合使用。
+
+## 基础用法
+
+<DemoBlock title="组合单选">
+  <RadioBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhRadio, LhRadioGroup } from '@lh-ui/react'
+
+export default function Demo() {
+  const [value, setValue] = useState('ink')
+
+  return (
+    <LhRadioGroup value={value} onChange={(val) => setValue(val as string)}>
+      <LhRadio value="ink">水墨</LhRadio>
+      <LhRadio value="danqing">丹青</LhRadio>
+      <LhRadio value="blank">留白</LhRadio>
+    </LhRadioGroup>
+  )
+}
+```
+
+## Radio Props
+
+| 属性 | 说明 | 类型 | 可选值 | 默认值 |
+| --- | --- | --- | --- | --- |
+| value | 选项值（必填） | `unknown` | — | — |
+| checked | 受控选中态（单独使用时） | `boolean` | — | — |
+| defaultChecked | 非受控默认选中 | `boolean` | — | `false` |
+| label | 显示文案 | `string` | — | — |
+| disabled | 禁用 | `boolean` | — | `false` |
+| size | 尺寸 | `'large' \| 'middle' \| 'small'` | — | 跟随 ConfigProvider |
+| name | 原生 name 属性（Group 透传） | `string` | — | — |
+| sx | 快速布局属性 | `SxProps` | — | — |
+
+## Radio 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onChange | 选中时触发（双参数） | `(checked: boolean, event: ChangeEvent) => void` | `@change` |
+
+## RadioGroup Props
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| value | 受控选中值 | `unknown` | — |
+| defaultValue | 非受控默认值 | `unknown` | — |
+| disabled | 禁用全部子项 | `boolean` | `false` |
+| size | 子项尺寸 | `'large' \| 'middle' \| 'small'` | 跟随 ConfigProvider |
+| name | 透传给子项的原生 name | `string` | — |
+
+## RadioGroup 事件
+
+| 事件 | 说明 | 回调签名 | Vue 对照 |
+| --- | --- | --- | --- |
+| onChange | 选中变化，回调参数是选项的 value | `(value: unknown) => void` | `@change` |
+
+:::tip[onChange 参数差异]
+`LhRadio` 的 `onChange` 回调是 `(checked, event)`；`LhRadioGroup` 的 `onChange` 回调直接是选中项的 `value`——与 CheckboxGroup 一致。
+:::
+
+## 样式
+
+```ts
+import '@lh-ui/react/style/radio'
+```

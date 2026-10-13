@@ -1,0 +1,92 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import DropdownBasic from '@site/demos/dropdown/basic'
+
+# Dropdown
+
+Folds an action menu under a trigger and expands it on hover or click. The menu uses `role="menu"` semantics with full keyboard navigation (arrow keys / Home / End / Enter / Esc) and roving tabindex.
+
+## Basic usage
+
+<DemoBlock title="Hover / click trigger and imperative usage">
+  <DropdownBasic />
+</DemoBlock>
+
+```tsx
+import { LhButton, LhDropdown, LhDropdownItem } from '@lh-ui/react'
+
+export default function Demo() {
+  return (
+    <LhDropdown
+      onCommand={(command) => console.log(command)}
+      dropdown={
+        <>
+          <LhDropdownItem command="new">New</LhDropdownItem>
+          <LhDropdownItem command="delete" disabled>
+            Delete
+          </LhDropdownItem>
+        </>
+      }
+    >
+      <LhButton>Open</LhButton>
+    </LhDropdown>
+  )
+}
+```
+
+## Dropdown Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| children | Trigger node | `ReactNode` | — | — |
+| dropdown | Menu content (a list of `LhDropdownItem`, corresponding to the `#dropdown` slot of plus) | `ReactNode` | — | — |
+| trigger | Trigger method | `'hover' \| 'click' \| 'contextmenu'` | — | `'hover'` |
+| placement | Placement | `LhDropdownPlacement` | `top` / `bottom` (with `-start` / `-end`), etc. | `'bottom-start'` |
+| disabled | Whether to disable | `boolean` | — | `false` |
+| visible | Controlled visibility | `boolean` | — | — |
+| defaultVisible | Uncontrolled default visibility | `boolean` | — | `false` |
+| hideOnClick | Whether to auto-close after clicking a menu item | `boolean` | — | `true` |
+| maxHeight | Maximum menu height (scrolls when exceeded) | `string \| number` | — | — |
+| popperClass | Custom menu class name | `string` | — | — |
+| themeVars | Component-level theme variables | `Record<string, string>` | — | — |
+| sx | Shorthand layout props (applied to the trigger) | `SxProps` | — | — |
+
+## Dropdown events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onCommand | Emitted when a menu item is clicked, carrying the item's `command` | `(command: string \| number) => void` | `command` |
+| onVisibleChange | Emitted when visibility changes | `(visible: boolean) => void` | `update:visible` |
+| onClickOutside | Emitted when clicking outside the menu (the menu also closes internally) | `() => void` | `click-outside` |
+
+## DropdownItem Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| children | Menu item content | `ReactNode` | — | — |
+| command | Command identifier, emitted with `onCommand` | `string \| number` | — | — |
+| disabled | Whether to disable (does not respond to clicks and is skipped by keyboard navigation) | `boolean` | — | `false` |
+| divided | Whether to show a divider | `boolean` | — | `false` |
+
+## DropdownItem events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onClick | Clicking the menu item (can coexist with `onCommand`) | `() => void` | — |
+
+## ref
+
+`forwardRef<LhDropdownInstance>`. `LhDropdownInstance` exposes `show()` / `hide()` / `toggle()` / `isVisible`.
+
+:::tip[Keyboard navigation (APG menu pattern)]
+After opening the menu, focus lands on the first enabled item; `ArrowUp` / `ArrowDown` cycle through items and skip disabled ones, `Home` / `End` jump to the first / last item, `Enter` / `Space` activate the current item, and `Esc` closes the menu and returns focus to the trigger. Only the anchor item has `tabIndex={0}`; the rest are `-1` (roving tabindex).
+:::
+
+:::tip[Slot → prop]
+plus uses a `#dropdown` slot for the menu; the React side uses a `dropdown` prop of the same name. The `contextmenu` trigger prevents the browser's default context menu.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/dropdown'
+```

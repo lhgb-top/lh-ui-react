@@ -1,0 +1,73 @@
+import DemoBlock from '@site/src/components/DemoBlock'
+import TagBasic from '@site/demos/tag/basic'
+
+# Tag
+
+Tags for marking and selection.
+
+## Basic usage
+
+<DemoBlock title="Basic usage">
+  <TagBasic />
+</DemoBlock>
+
+```tsx
+import { useState } from 'react'
+import { LhTag } from '@lh-ui/react'
+
+export default function Demo() {
+  const [tags, setTags] = useState(['Ink wash', 'Chinese style', 'Component library'])
+
+  const handleClose = (tag: string) => {
+    setTags((prev) => prev.filter((item) => item !== tag))
+  }
+
+  return (
+    <>
+      <LhTag>Default tag</LhTag>
+      <LhTag type="primary">Primary tag</LhTag>
+      <LhTag type="success">Success tag</LhTag>
+      <LhTag type="warning" round>Rounded tag</LhTag>
+      <LhTag type="danger" hit>Outlined tag</LhTag>
+      {tags.map((tag) => (
+        <LhTag key={tag} closable onClose={() => handleClose(tag)}>
+          {tag}
+        </LhTag>
+      ))}
+    </>
+  )
+}
+```
+
+## Tag Props
+
+| Prop | Description | Type | Options | Default |
+| --- | --- | --- | --- | --- |
+| type | Type | `'text' \| 'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | — | `'text'` |
+| size | Size | `'large' \| 'middle' \| 'small'` | — | From ConfigProvider |
+| closable | Closable | `boolean` | — | `false` |
+| disabled | Disabled (no click or close) | `boolean` | — | `false` |
+| round | Rounded corners | `boolean` | — | `false` |
+| hit | Outlined style | `boolean` | — | `false` |
+| sx | Layout shorthand | `SxProps` | — | — |
+
+## Tag events
+
+| Event | Description | Callback signature | Vue equivalent |
+| --- | --- | --- | --- |
+| onClick | Fired on click (when `onClick` is provided and not disabled, the component upgrades to `role="button"`) | `(event: MouseEvent) => void` | `@click` |
+| onClose | Close button clicked | `(event: MouseEvent) => void` | `@close` |
+
+:::tip[Keyboard interaction]
+A clickable Tag renders as `role="button"` and responds to Enter / Space. See [Accessibility](../guide/accessibility.md).
+:::
+
+:::tip[Unmounts on close (React enhancement)]
+After the close button is clicked, the Tag **unmounts from the DOM immediately**, then fires `onClose`. lh-ui-plus's `@close` only fires an event and lets the outside remove the node with `v-if`; React has no directives, and forcing external state control just for unmounting a display-only tag is too heavy, so the closed state is built in. If you need full control over visibility, wrap it in a conditional render.
+:::
+
+## Styles
+
+```ts
+import '@lh-ui/react/style/tag'
+```
