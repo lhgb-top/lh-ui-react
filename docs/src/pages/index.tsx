@@ -4,12 +4,18 @@
  * Docusaurus 页面走 src/pages/，routeBasePath '/' 的 docs 插件不与之冲突
  * （docs 无 slug: '/' 的文档）。
  *
- * 文案一律走 translate()（@docusaurus/Translator），条目在
+ * 文案一律走 translate()（@docusaurus/Translate），条目在
  * i18n/<locale>/code.json 的 homepage.* 命名空间下。
+ *
+ * 导入路径说明：Docusaurus 用细粒度 webpack alias 把
+ * @docusaurus/<文件名> 指向 core/lib/client/exports/<文件名>，
+ * translate() 的公开来源是 client/exports/Translate.js，即
+ * @docusaurus/Translate（不是 @docusaurus/Translator，后者多了 r，
+ * 不存在也不走该 alias）。
  */
 import Link from '@docusaurus/Link'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
-import { translate } from '@docusaurus/Translator'
+import { translate } from '@docusaurus/Translate'
 import Layout from '@theme/Layout'
 
 import styles from './index.module.css'

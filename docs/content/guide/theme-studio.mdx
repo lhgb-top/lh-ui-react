@@ -36,7 +36,7 @@ import ThemeStudio from '@site/src/components/ThemeStudio'
 
 ## 注意事项
 
-:::warning[只能写 <style> 元素]
+:::warning[只能写 &lt;style&gt; 元素]
 应用预设变量时必须写 `<style>` 元素（特异性 0,1,0），**不要**写 `documentElement` 的内联 style——内联特异性 1,0,0,0 高于一切样式表，会压过 `var-dark.scss` 的整段暗色变量，导致暗色模式配色失真。库内的 `useLhPresetTheme` 与本站的防闪烁脚本都遵守此约定。
 :::
 

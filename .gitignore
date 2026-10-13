@@ -6,7 +6,6 @@ node_modules
 es
 lib
 dist
-theme
 coverage
 
 # docs 产物（Docusaurus）

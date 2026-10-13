@@ -12,7 +12,7 @@
 import type { Config } from '@docusaurus/types'
 import { themes } from 'prism-react-renderer'
 import { resolve } from 'node:path'
-import webpack from 'webpack'
+import { DefinePlugin } from 'webpack'
 import { createLocalShareWebpackAliases } from '../scripts/local-share-alias.mjs'
 import {
   LH_THEME_PRESETS,
@@ -71,7 +71,7 @@ const config: Config = {
   onDuplicateRoutes: 'warn',
 
   // 即使构建产物提交到 gh-pages 分支也保持干净
-  organizationName: 'lh-ui',
+  organizationName: 'lhgb-top',
   projectName: 'lh-ui-react',
 
   i18n: {
@@ -102,7 +102,7 @@ const config: Config = {
           showLastUpdateAuthor: false,
           // 非 git 仓库（单库下载 / CI 单仓 clone）下取 last commit 会致命报错，关掉
           showLastUpdateTime: false,
-          editUrl: 'https://github.com/lh-ui/lh-ui-react/edit/main/docs/',
+          editUrl: 'https://github.com/lhgb-top/lh-ui-react/edit/master/docs/',
           exclude: ['**/en/**'],
         },
         blog: false,
@@ -169,11 +169,14 @@ const config: Config = {
         { href: 'https://www.lhgb.top/lhui/plus/', label: 'Vue3 版', position: 'right' },
         { href: 'https://www.lhgb.top/lhui/vue2/', label: 'Vue2 版', position: 'right' },
         // 主题预设切换器：自定义 NavbarItem（src/theme/NavbarItem/PresetThemeSwitcher），
-        // storageKey 与 PRESET_FOUC_SCRIPT 共用 'lh-docs-preset'，刷新无闪烁
-        { type: 'PresetThemeSwitcher', position: 'right' },
+        // storageKey 与 PRESET_FOUC_SCRIPT 共用 'lh-docs-preset'，刷新无闪烁。
+        // Docusaurus 配置校验要求自定义 navbar item 的 type 以 custom- 开头
+        // （@docusaurus/theme-classic 的 CustomNavbarItemRegexp），运行时按完整 type
+        // 字符串查 src/theme/NavbarItem/ComponentTypes 的同名键取组件。
+        { type: 'custom-presetThemeSwitcher', position: 'right' },
         { type: 'localeDropdown', position: 'right' },
         {
-          href: 'https://github.com/lh-ui/lh-ui-react',
+          href: 'https://github.com/lhgb-top/lh-ui-react',
           label: 'GitHub',
           position: 'right',
         },

@@ -36,7 +36,7 @@ Theme Studio is an interactive tool: pick a preset, edit tokens one by one, prev
 
 ## Notes
 
-:::warning[Only write to a <style> element]
+:::warning[Only write to a &lt;style&gt; element]
 When applying preset variables you must write to a `<style>` element (specificity 0,1,0) — **never** to `documentElement`'s inline style. Inline specificity is 1,0,0,0, higher than any stylesheet, and it would override the entire `var-dark.scss` dark variable block, distorting the dark-mode palette. Both the library's `useLhPresetTheme` and this site's anti-flicker script follow this rule.
 :::
 
